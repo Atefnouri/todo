@@ -30,7 +30,7 @@ Make sure you have the following software installed on your machine:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/todo-list-app.git
+   git clone https://github.com/Atefnouri/todo.git
    ```
 
 2. Navigate to the project directory:
@@ -69,6 +69,7 @@ Contributions are welcome! If you find any bugs or want to add new features, ple
 - Push your changes to your forked repository.
 - Submit a pull request to the main repository.
 
+<!--
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
@@ -81,3 +82,4 @@ This project is licensed under the [MIT License](LICENSE).
 ## Contact
 
 If you have any questions or suggestions, feel free to contact the project maintainer at your-email@example.com.
+-->
