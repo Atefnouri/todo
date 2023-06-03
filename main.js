@@ -29,6 +29,9 @@ var TodoList = /** @class */ (function () {
             }
         };
         this.addToList = function (message) {
+            if (_this.input.value.trim().length === 0) {
+                return;
+            }
             _this.result = '';
             //console.log(`this a ${message}`);
             _this.todos.push({

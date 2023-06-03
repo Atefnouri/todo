@@ -47,6 +47,11 @@ class TodoList {
 
 
      addToList = (message:string) =>  {
+
+      if(this.input.value.trim().length === 0){
+        return;
+      }
+      
       this.result = '';
       //console.log(`this a ${message}`);
 

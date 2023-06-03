@@ -50,7 +50,7 @@ Make sure you have the following software installed on your machine:
 1. Build the TypeScript code:
 
    ```bash
-   npm run build
+   npm tsc main.ts --watch
    ```
 
 2. Open the `index.html` file in your preferred web browser.
