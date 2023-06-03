@@ -1,22 +1,49 @@
 var TodoList = /** @class */ (function () {
+    // Get the list and its children
     function TodoList() {
         var _this = this;
         this.result = "";
+        this.input = document.querySelector('#task');
+        this.button = document.querySelector('#addButton');
+        this.addEventHandler = function () {
+            var myList = document.getElementById("listdiv");
+            var liElements = myList === null || myList === void 0 ? void 0 : myList.getElementsByTagName("li");
+            if (liElements) {
+                var _loop_1 = function (i) {
+                    liElements[i].addEventListener("click", function () {
+                        console.log("Clicked on item ".concat(i + 1));
+                    });
+                };
+                for (var i = 0; i < liElements.length; i++) {
+                    _loop_1(i);
+                }
+                ;
+            }
+        };
+        this.initInput = function () {
+            if (_this.button) {
+                _this.button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    _TodoList.addToList(_this.input.value);
+                });
+            }
+        };
         this.addToList = function (message) {
             _this.result = '';
-            console.log("this a ".concat(message));
+            //console.log(`this a ${message}`);
             _this.todos.push({
                 id: _this.todos.length + 1,
                 task: message,
                 completed: false,
             });
-            console.table(_this.todos);
+            _this.input.value = '';
+            //console.table(this.todos); 
             _this.disPlayHandler();
         };
         this.disPlayHandler = function () {
             console.log('disPlayHandler');
             _this.todos.forEach(function (el) {
-                var item = "<li>".concat(el.task, "</li> \n");
+                var item = "\n        <li> <input type=\"checkbox\" id=\"".concat(el.id, "\" > ").concat(el.task, " </li>\n        ");
                 _this.result += (item);
             });
             console.log('result', _this.result);
@@ -24,16 +51,17 @@ var TodoList = /** @class */ (function () {
             if (taskArea) {
                 taskArea.innerHTML = _TodoList.result;
             }
+            _this.addEventHandler();
         };
+        console.log('App is initialized');
+        //initial setup
         this.todos = [];
-        console.log('App is running ');
+        this.initInput();
     }
     return TodoList;
 }());
 //main function
 var _TodoList = new TodoList();
-var button = document.querySelector('#addButton');
-var input = document.querySelector('#task');
 var all = '';
 var displayTask = function (tab) {
     tab.forEach(function (element) {
@@ -41,9 +69,3 @@ var displayTask = function (tab) {
     });
     console.log('all', all);
 };
-if (button) {
-    button.addEventListener('click', function (event) {
-        event.preventDefault();
-        _TodoList.addToList(input.value);
-    });
-}
