@@ -12,6 +12,7 @@ var TodoList = /** @class */ (function () {
                 var _loop_1 = function (i) {
                     liElements[i].addEventListener("click", function () {
                         console.log("Clicked on item ".concat(i + 1));
+                        _this.handleClickOnItem(i + 1);
                     });
                 };
                 for (var i = 0; i < liElements.length; i++) {
@@ -20,11 +21,11 @@ var TodoList = /** @class */ (function () {
                 ;
             }
         };
-        this.initInput = function () {
+        this.addButtonHandler = function () {
             if (_this.button) {
                 _this.button.addEventListener('click', function (event) {
                     event.preventDefault();
-                    _TodoList.addToList(_this.input.value);
+                    _this.addToList(_this.input.value);
                 });
             }
         };
@@ -39,36 +40,83 @@ var TodoList = /** @class */ (function () {
                 task: message,
                 completed: false,
             });
+            //reset field after adding to list
             _this.input.value = '';
-            //console.table(this.todos); 
-            _this.disPlayHandler();
+            console.table(_this.todos);
+            _this.disPlayHandlerTrigger();
         };
-        this.disPlayHandler = function () {
-            console.log('disPlayHandler');
+        this.disPlayHandlerTrigger = function () {
+            //reset field
+            var taskArea = document.querySelector('#listdiv');
+            if (taskArea) {
+                taskArea.innerHTML = "";
+            }
+            console.log('disPlayHandlerTrigger');
+            var item = "";
             _this.todos.forEach(function (el) {
-                var item = "\n        <li> <input type=\"checkbox\" id=\"".concat(el.id, "\" > ").concat(el.task, " </li>\n        ");
+                if (el.completed === false) {
+                    item = "<li> <input type=\"checkbox\"  id=\"".concat(el.id, "\" > ").concat(el.task, " </li> ");
+                }
+                else {
+                    item = "<li> <input type=\"checkbox\" checked id=\"".concat(el.id, "\" > ").concat(el.task, " </li> ");
+                }
                 _this.result += (item);
             });
-            console.log('result', _this.result);
-            var taskArea = document.querySelector('#listdiv');
             if (taskArea) {
                 taskArea.innerHTML = _TodoList.result;
             }
             _this.addEventHandler();
+            _this.addStyleChange();
         };
         console.log('App is initialized');
         //initial setup
         this.todos = [];
-        this.initInput();
+        this.addButtonHandler();
     }
+    TodoList.prototype.addStyleChange = function () {
+        // Select all <li> elements
+        var liElements = document.querySelectorAll("li");
+        // Iterate through each <li> element
+        liElements.forEach(function (liElement) {
+            // Find the checkbox within the current <li> element
+            var checkbox = liElement.querySelector("input[type='checkbox']");
+            // Check if the checkbox is checked
+            if (checkbox && checkbox.checked) {
+                // Checkbox is checked
+                liElement.style.textDecoration = 'line-through';
+            }
+        });
+    };
+    TodoList.prototype.handleClickOnItem = function ($id) {
+        var checkboxInstance = document.getElementById("".concat($id));
+        console.log(checkboxInstance);
+        checkboxInstance.checked = !checkboxInstance.checked;
+        var itemObject = this.todos.find(function (el) { return el.id === $id; });
+        if (itemObject) {
+            itemObject.completed = !itemObject.completed;
+        }
+        this.addStyleChange();
+    };
+    TodoList.prototype.chekcTheItem = function (id) {
+        /*
+             let todo = this.todos.find((todo) => todo.id === id);
+            console.log(todo);
+         
+          if(todo){
+               todo.completed = !todo.completed;
+             }
+            
+             this.disPlayHandlerTrigger();
+        */
+    };
     return TodoList;
 }());
 //main function
 var _TodoList = new TodoList();
-var all = '';
-var displayTask = function (tab) {
-    tab.forEach(function (element) {
-        all.concat(element.task);
-    });
-    console.log('all', all);
-};
+// var all:string = '';
+//  const displayTask = (tab:Todo[]):void => {
+//   tab.forEach(element => {
+//     all.concat(element.task);
+//   });
+//   console.log('all',all);
+//  }
