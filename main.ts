@@ -6,7 +6,7 @@ interface Todo {
 
 class TodoList {
 
-    public todos: Todo[];
+    public todosArray: Todo[]= [];
     public result:string = "";
     input   = document.querySelector('#task') as HTMLInputElement
     button : Element | null = document.querySelector('#addButton');
@@ -16,8 +16,6 @@ class TodoList {
     constructor() {
       console.log('App is initialized');
       //initial setup
-      this.todos = [];
-  
       this.addButtonHandler();
     }
 
@@ -25,6 +23,9 @@ class TodoList {
 
     addStyleChange() {
       
+
+      console.log('style is called');
+
         // Select all <li> elements
       const liElements = document.querySelectorAll("li");
 
@@ -37,7 +38,9 @@ class TodoList {
         if (checkbox && checkbox.checked) {
           // Checkbox is checked
           liElement.style.textDecoration = 'line-through';
-        } 
+        }  else if (checkbox && !checkbox.checked) {
+          liElement.style.textDecoration = 'none';
+        }
       });
 
     }
@@ -49,7 +52,7 @@ class TodoList {
       let checkboxInstance = document.getElementById(`${$id}`) as HTMLInputElement;
       console.log(checkboxInstance);
       checkboxInstance.checked = !checkboxInstance.checked;
-      let itemObject = this.todos.find((el) => el.id === $id);
+      let itemObject = (this.todosArray as Todo[]).find((el) => el.id === $id);
    if(itemObject) {
       itemObject.completed = !itemObject.completed;
     }
@@ -82,7 +85,7 @@ class TodoList {
 
   chekcTheItem(id:number){
 /*
-     let todo = this.todos.find((todo) => todo.id === id);
+     let todo = this.todosArray.find((todo) => todo.id === id);
     console.log(todo);
  
   if(todo){
@@ -94,6 +97,8 @@ class TodoList {
   }
 
 
+
+  //Handle the add task button clikc event
   addButtonHandler = ():void =>{
       if (this.button) {
         this.button.addEventListener('click', (event) => {
@@ -104,7 +109,7 @@ class TodoList {
       
     }
 
-
+    // add task from input to todosArray array
      addToList = (message:string) =>  {
 
       if(this.input.value.trim().length === 0){
@@ -114,8 +119,8 @@ class TodoList {
       this.result = '';
       //console.log(`this a ${message}`);
 
-      this.todos.push({
-              id: this.todos.length + 1,
+      this.todosArray.push({
+              id: this.todosArray.length + 1,
               task: message,
               completed: false,
             });
@@ -123,7 +128,7 @@ class TodoList {
 
         //reset field after adding to list
         this.input.value = '';
-        console.table(this.todos); 
+        console.table(this.todosArray); 
         this.disPlayHandlerTrigger(); 
     }
 
@@ -138,7 +143,7 @@ class TodoList {
 
       console.log('disPlayHandlerTrigger');
       let item :string  = "";
-      this.todos.forEach(el => {
+      this.todosArray.forEach(el => {
         if(el.completed === false){
           item = `<li> <input type="checkbox"  id="${el.id}" > ${el.task} </li> `;
         } else {

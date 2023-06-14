@@ -2,6 +2,7 @@ var TodoList = /** @class */ (function () {
     // Get the list and its children
     function TodoList() {
         var _this = this;
+        this.todosArray = [];
         this.result = "";
         this.input = document.querySelector('#task');
         this.button = document.querySelector('#addButton');
@@ -21,6 +22,7 @@ var TodoList = /** @class */ (function () {
                 ;
             }
         };
+        //Handle the add task button clikc event
         this.addButtonHandler = function () {
             if (_this.button) {
                 _this.button.addEventListener('click', function (event) {
@@ -29,20 +31,21 @@ var TodoList = /** @class */ (function () {
                 });
             }
         };
+        // add task from input to todosArray array
         this.addToList = function (message) {
             if (_this.input.value.trim().length === 0) {
                 return;
             }
             _this.result = '';
             //console.log(`this a ${message}`);
-            _this.todos.push({
-                id: _this.todos.length + 1,
+            _this.todosArray.push({
+                id: _this.todosArray.length + 1,
                 task: message,
                 completed: false,
             });
             //reset field after adding to list
             _this.input.value = '';
-            console.table(_this.todos);
+            console.table(_this.todosArray);
             _this.disPlayHandlerTrigger();
         };
         this.disPlayHandlerTrigger = function () {
@@ -53,7 +56,7 @@ var TodoList = /** @class */ (function () {
             }
             console.log('disPlayHandlerTrigger');
             var item = "";
-            _this.todos.forEach(function (el) {
+            _this.todosArray.forEach(function (el) {
                 if (el.completed === false) {
                     item = "<li> <input type=\"checkbox\"  id=\"".concat(el.id, "\" > ").concat(el.task, " </li> ");
                 }
@@ -70,10 +73,10 @@ var TodoList = /** @class */ (function () {
         };
         console.log('App is initialized');
         //initial setup
-        this.todos = [];
         this.addButtonHandler();
     }
     TodoList.prototype.addStyleChange = function () {
+        console.log('style is called');
         // Select all <li> elements
         var liElements = document.querySelectorAll("li");
         // Iterate through each <li> element
@@ -85,13 +88,16 @@ var TodoList = /** @class */ (function () {
                 // Checkbox is checked
                 liElement.style.textDecoration = 'line-through';
             }
+            else if (checkbox && !checkbox.checked) {
+                liElement.style.textDecoration = 'none';
+            }
         });
     };
     TodoList.prototype.handleClickOnItem = function ($id) {
         var checkboxInstance = document.getElementById("".concat($id));
         console.log(checkboxInstance);
         checkboxInstance.checked = !checkboxInstance.checked;
-        var itemObject = this.todos.find(function (el) { return el.id === $id; });
+        var itemObject = this.todosArray.find(function (el) { return el.id === $id; });
         if (itemObject) {
             itemObject.completed = !itemObject.completed;
         }
@@ -99,7 +105,7 @@ var TodoList = /** @class */ (function () {
     };
     TodoList.prototype.chekcTheItem = function (id) {
         /*
-             let todo = this.todos.find((todo) => todo.id === id);
+             let todo = this.todosArray.find((todo) => todo.id === id);
             console.log(todo);
          
           if(todo){
