@@ -7,6 +7,8 @@ interface Todo {
 class TodoList {
 
     public todosArray: Todo[]= [];
+    public CompletedTodosArray: Todo[]= [];
+
     public result:string = "";
     input   = document.querySelector('#task') as HTMLInputElement
     button : Element | null = document.querySelector('#addButton');
@@ -49,20 +51,50 @@ class TodoList {
 
     handleClickOnItem($id:number) {
      
+      //toggle the checkbox
       let checkboxInstance = document.getElementById(`${$id}`) as HTMLInputElement;
       console.log(checkboxInstance);
       checkboxInstance.checked = !checkboxInstance.checked;
+
       let itemObject = (this.todosArray as Todo[]).find((el) => el.id === $id);
    if(itemObject) {
       itemObject.completed = !itemObject.completed;
     }
-
+   if(itemObject?.completed ){
+    this.CompletedTodosArray.push(itemObject);
+    this.completedDisplayHandler();
+   }
 
     this.addStyleChange();
-
-
-    
   }
+
+
+
+  completedDisplayHandler = () => {
+
+          //reset field
+      let completedArea = document.querySelector('#completedList');
+      if(completedArea) {
+        completedArea.innerHTML = "";
+      }
+       
+    this.CompletedTodosArray.forEach((item) => {
+
+      const li = document.createElement('li');
+      li.textContent = item.task;
+      li.style.color = 'gray';
+  
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = true;
+  
+      li.appendChild(checkbox);
+      //add to the main area
+      completedArea?.appendChild(li);
+    });
+  }
+  
+
 
 
 
@@ -82,19 +114,6 @@ class TodoList {
 
   }
 
-
-  chekcTheItem(id:number){
-/*
-     let todo = this.todosArray.find((todo) => todo.id === id);
-    console.log(todo);
- 
-  if(todo){
-       todo.completed = !todo.completed;
-     }
-    
-     this.disPlayHandlerTrigger();
-*/
-  }
 
 
 
@@ -171,15 +190,6 @@ class TodoList {
 //main function
  const _TodoList = new TodoList();
  
-// var all:string = '';
-//  const displayTask = (tab:Todo[]):void => {
-//   tab.forEach(element => {
-//     all.concat(element.task);
-//   });
-//   console.log('all',all);
-//  }
-
-
 
 
 
