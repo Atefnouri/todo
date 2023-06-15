@@ -6,18 +6,24 @@ interface Todo {
 
 class TodoList {
 
-    public todosArray: Todo[]= [];
-    public CompletedTodosArray: Todo[]= [];
-
-    public result:string = "";
-    input   = document.querySelector('#task') as HTMLInputElement
-    button : Element | null = document.querySelector('#addButton');
-    // Get the list and its children
-
+    public todosArray: Todo[];
+    public CompletedTodosArray: Todo[];
+    public result:string;
+    input: HTMLInputElement | null ;
+    button : Element | null;
+    emptyMsg:HTMLElement | null;
 
     constructor() {
-      console.log('App is initialized');
-      //initial setup
+    
+      //initialasting
+      this.emptyMsg = document.getElementById("emptymsg");
+      this.button = document.querySelector('#addButton');
+      this.input = document.querySelector('#task') as HTMLInputElement;
+      this.result = "";
+      this.CompletedTodosArray = [];
+      this.todosArray = [];
+
+
       this.addButtonHandler();
     }
 
@@ -123,9 +129,12 @@ class TodoList {
         this.button.addEventListener('click', (event) => {
           event.preventDefault();
           this.addToList(this.input.value);
+          this.emptyMsg!.hidden = true;
         });
        }
       
+    
+
     }
 
     // add task from input to todosArray array

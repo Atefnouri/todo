@@ -1,12 +1,6 @@
 var TodoList = /** @class */ (function () {
-    // Get the list and its children
     function TodoList() {
         var _this = this;
-        this.todosArray = [];
-        this.CompletedTodosArray = [];
-        this.result = "";
-        this.input = document.querySelector('#task');
-        this.button = document.querySelector('#addButton');
         this.completedDisplayHandler = function () {
             //reset field
             var completedArea = document.querySelector('#completedList');
@@ -47,6 +41,7 @@ var TodoList = /** @class */ (function () {
                 _this.button.addEventListener('click', function (event) {
                     event.preventDefault();
                     _this.addToList(_this.input.value);
+                    _this.emptyMsg.hidden = true;
                 });
             }
         };
@@ -90,8 +85,13 @@ var TodoList = /** @class */ (function () {
             _this.addEventHandler();
             _this.addStyleChange();
         };
-        console.log('App is initialized');
-        //initial setup
+        //initialasting
+        this.emptyMsg = document.getElementById("emptymsg");
+        this.button = document.querySelector('#addButton');
+        this.input = document.querySelector('#task');
+        this.result = "";
+        this.CompletedTodosArray = [];
+        this.todosArray = [];
         this.addButtonHandler();
     }
     TodoList.prototype.addStyleChange = function () {
