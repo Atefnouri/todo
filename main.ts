@@ -12,6 +12,7 @@ class TodoList {
     input: HTMLInputElement | null ;
     button : Element | null;
     emptyMsg:HTMLElement | null;
+    public itemCount:number;
 
     constructor() {
     
@@ -22,7 +23,9 @@ class TodoList {
       this.result = "";
       this.CompletedTodosArray = [];
       this.todosArray = [];
+      this.itemCount = 0;
       console.log('hello my darkness my only friends');
+
 
       this.addButtonHandler();
     }
@@ -204,6 +207,12 @@ class TodoList {
         if(taskArea){
           taskArea.innerHTML = "";
           }
+
+          //count how many task in the array
+          let counterArea = document.querySelector('#itemCounter');
+          if (counterArea){
+            counterArea.innerHTML = this.todosArray.length.toString();
+          } 
       
 
       console.log('🔥 todosArray 🔥');

@@ -80,6 +80,11 @@ var TodoList = /** @class */ (function () {
             if (taskArea) {
                 taskArea.innerHTML = "";
             }
+            //count how many task in the array
+            var counterArea = document.querySelector('#itemCounter');
+            if (counterArea) {
+                counterArea.innerHTML = _this.todosArray.length.toString();
+            }
             console.log('🔥 todosArray 🔥');
             console.table(_this.todosArray);
             console.log('disPlayHandlerTrigger');
@@ -104,6 +109,7 @@ var TodoList = /** @class */ (function () {
         this.result = "";
         this.CompletedTodosArray = [];
         this.todosArray = [];
+        this.itemCount = 0;
         console.log('hello my darkness my only friends');
         this.addButtonHandler();
     }
