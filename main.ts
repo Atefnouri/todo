@@ -121,6 +121,10 @@ class TodoList {
       completedArea?.appendChild(li);
     });
 
+    //console.table(this.CompletedTodosArray);
+    if(this.todosArray.length === 0) {
+      this.emptyMsg!.hidden = false;
+    }
 
   }
   

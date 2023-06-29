@@ -21,6 +21,10 @@ var TodoList = /** @class */ (function () {
                 //add to the main area
                 completedArea === null || completedArea === void 0 ? void 0 : completedArea.appendChild(li);
             });
+            //console.table(this.CompletedTodosArray);
+            if (_this.todosArray.length === 0) {
+                _this.emptyMsg.hidden = false;
+            }
         };
         //Sets up event listeners for each Todo item in the list.
         //   addEventHandler =  ( ) => {
