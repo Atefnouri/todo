@@ -5,7 +5,7 @@ interface Todo {
 }
 
 class TodoList {
-
+ 
     public todosArray: Todo[];
     public CompletedTodosArray: Todo[];
     public result:string;
@@ -22,13 +22,13 @@ class TodoList {
       this.result = "";
       this.CompletedTodosArray = [];
       this.todosArray = [];
-
+      console.log('hello my darkness my only friends');
 
       this.addButtonHandler();
     }
 
 
-
+  //Modifies the style of the Todo items based on their completion status.
     addStyleChange() {
       
 
@@ -54,31 +54,49 @@ class TodoList {
     }
   
 
-
+    //Handles the click event on a Todo item. Toggles the completion status and updates the corresponding arrays.
     handleClickOnItem($id:number) {
-     
+      
+      console.log(`clicked on item ${$id}`);
+      //return;
       //toggle the checkbox
-      let checkboxInstance = document.getElementById(`${$id}`) as HTMLInputElement;
-      console.log(checkboxInstance);
-      checkboxInstance.checked = !checkboxInstance.checked;
+      //let checkboxInstance = document.getElementById(`${$id}`) as HTMLInputElement;
+      //console.log(checkboxInstance);
+      //checkboxInstance.checked = !checkboxInstance.checked;
 
-      let itemObject = (this.todosArray as Todo[]).find((el) => el.id === $id);
-   if(itemObject) {
-      itemObject.completed = !itemObject.completed;
-    }
-   if(itemObject?.completed ){
+      let itemObject = (this.todosArray as Array<Todo>).find((el) => el.id === $id);
+      if(itemObject){
+     //filtet the check item from the todos arra
+     itemObject.completed = true;
+    this.todosArray = this.todosArray.filter((item) => item.id !== $id);
+    console.table(this.todosArray);
     this.CompletedTodosArray.push(itemObject);
+    this.disPlayHandlerTrigger();
     this.completedDisplayHandler();
-   }
 
-    this.addStyleChange();
+      }
+      else {
+        console.log('item not found');
+      }
+
+
+  //  if(itemObject) {
+  //     itemObject.completed = !itemObject.completed;
+  //   }
+  //  if(itemObject?.completed ){
+
+
+  //  }
+
+    //this.addStyleChange();
   }
 
 
 
+  // Displays the completed Todo items in a separate area.
   completedDisplayHandler = () => {
 
-          //reset field
+      //reset field
       let completedArea = document.querySelector('#completedList');
       if(completedArea) {
         completedArea.innerHTML = "";
@@ -89,46 +107,62 @@ class TodoList {
       const li = document.createElement('li');
       li.textContent = item.task;
       li.style.color = 'gray';
-  
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.checked = true;
-  
-      li.appendChild(checkbox);
+      li.style.textDecoration = 'line-through';
       //add to the main area
       completedArea?.appendChild(li);
     });
+
+
   }
   
 
 
 
-
-    addEventHandler =  ( ) => {
+  //Sets up event listeners for each Todo item in the list.
+  //   addEventHandler =  ( ) => {
       
-     const myList = document.getElementById("listdiv");
-     const liElements = myList?.getElementsByTagName("li");
-      if(liElements){
-        for (let i = 0; i < liElements.length; i++) {
-          liElements[i].addEventListener("click", () => {
-            console.log(`Clicked on item ${i+1}`);
+  //    const myList = document.getElementById("listdiv");
+  //    const liElements = myList?.getElementsByTagName("li");
+  //     if(liElements){
+  //       for (let i = 0; i < liElements.length; i++) {
+  //         liElements[i].addEventListener("click", () => {
+  //           console.log(`Clicked on item ${i+1}`);
             
-            this.handleClickOnItem(i+1);
+  //           this.handleClickOnItem(i+1);
   
-          })};
+  //         })};
+  //     }
+
+  // }
+
+
+  addEventHandler = () => {
+    const myList = document.getElementById("listdiv");
+    const liElements = myList?.getElementsByTagName("li");
+  
+    if (liElements) {
+      for (let i = 0; i < liElements.length; i++) {
+        const li = liElements[i];
+        const id = li.getAttribute("id");
+  
+        li.addEventListener("click", () => {
+          console.log(`Clicked on item ${id}`);
+          this.handleClickOnItem(Number(id));
+        });
       }
-
+    }
   }
+  
 
 
 
 
-  //Handle the add task button clikc event
+ //: Handles the click event on the add task button.
   addButtonHandler = ():void =>{
       if (this.button) {
         this.button.addEventListener('click', (event) => {
           event.preventDefault();
-          this.addToList(this.input.value);
+          this.addToList(this.input!.value);
           this.emptyMsg!.hidden = true;
         });
        }
@@ -137,10 +171,10 @@ class TodoList {
 
     }
 
-    // add task from input to todosArray array
+    //Adds a new task to the todosArray.
      addToList = (message:string) =>  {
 
-      if(this.input.value.trim().length === 0){
+      if(this.input!.value.trim().length === 0){
         return;
       }
 
@@ -155,37 +189,42 @@ class TodoList {
 
 
         //reset field after adding to list
-        this.input.value = '';
-        console.table(this.todosArray); 
+        this.input!.value = '';
+  
         this.disPlayHandlerTrigger(); 
     }
 
 
+    //Displays the Todo items in the main list area.
     disPlayHandlerTrigger = () => {
 
       //reset field
+        this.result = "";
         let taskArea = document.querySelector('#listdiv');
         if(taskArea){
           taskArea.innerHTML = "";
           }
+      
+
+      console.log('🔥 todosArray 🔥');
+      console.table(this.todosArray); 
 
       console.log('disPlayHandlerTrigger');
       let item :string  = "";
       this.todosArray.forEach(el => {
-        if(el.completed === false){
-          item = `<li> <input type="checkbox"  id="${el.id}" > ${el.task} </li> `;
-        } else {
-          item = `<li> <input type="checkbox" checked id="${el.id}" > ${el.task} </li> `;
-        }
+       // if(el.completed === false){
+          item = `<li  id="${el.id}">  ${el.task} </li> `;
+        //} 
       
         this.result += (item);
       });
       
       if(taskArea){
-      taskArea.innerHTML = _TodoList.result;
+      taskArea.innerHTML = this.result;
       }
+      console.log('loop trough items ✅');
     this.addEventHandler();
-    this.addStyleChange();
+    //this.addStyleChange();
     }
 
 
