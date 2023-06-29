@@ -3,6 +3,11 @@ var TodoList = /** @class */ (function () {
         var _this = this;
         // Displays the completed Todo items in a separate area.
         this.completedDisplayHandler = function () {
+            //count how many task in the array
+            var completeCounter = document.querySelector('#itemCompletedCounter');
+            if (completeCounter) {
+                completeCounter.innerHTML = _this.CompletedTodosArray.length.toString();
+            }
             //reset field
             var completedArea = document.querySelector('#completedList');
             if (completedArea) {

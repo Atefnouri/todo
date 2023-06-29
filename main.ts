@@ -12,7 +12,6 @@ class TodoList {
     input: HTMLInputElement | null ;
     button : Element | null;
     emptyMsg:HTMLElement | null;
-    public itemCount:number;
 
     constructor() {
     
@@ -98,6 +97,13 @@ class TodoList {
 
   // Displays the completed Todo items in a separate area.
   completedDisplayHandler = () => {
+
+
+            //count how many task in the array
+            let completeCounter = document.querySelector('#itemCompletedCounter');
+            if (completeCounter){
+              completeCounter.innerHTML = this.CompletedTodosArray.length.toString();
+            } 
 
       //reset field
       let completedArea = document.querySelector('#completedList');
@@ -213,6 +219,8 @@ class TodoList {
           if (counterArea){
             counterArea.innerHTML = this.todosArray.length.toString();
           } 
+
+     
       
 
       console.log('🔥 todosArray 🔥');
