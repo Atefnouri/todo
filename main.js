@@ -16,14 +16,52 @@ var TodoList = /** @class */ (function () {
             _this.CompletedTodosArray.forEach(function (item) {
                 var li = document.createElement('li');
                 li.textContent = item.task;
+                li.setAttribute('id', item.id.toString());
                 li.style.color = 'gray';
                 li.style.textDecoration = 'line-through';
+                // Create the button element
+                var deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.setAttribute('id', "del");
+                // Add the button to the list item
+                li.appendChild(deleteButton);
+                /* const undoButton = document.createElement("button");
+                 undoButton.textContent = "Undo";
+                 li.appendChild(undoButton);*/
                 //add to the main area
                 completedArea === null || completedArea === void 0 ? void 0 : completedArea.appendChild(li);
             });
             //console.table(this.CompletedTodosArray);
             if (_this.todosArray.length === 0) {
                 _this.emptyMsg.hidden = false;
+            }
+            _this.addClickEventsToButtons();
+        };
+        this.addClickEventsToButtons = function () {
+            var listItems = document.querySelectorAll("#completedList li");
+            listItems.forEach(function (li) {
+                var deleteButton = li.querySelector("#del");
+                var liId = li.id;
+                if (deleteButton) {
+                    deleteButton.addEventListener("click", function () {
+                        _this.handleButtonClick(liId);
+                    });
+                }
+            });
+        };
+        // Perform the necessary actions for deleting the item with the provided ID
+        this.handleButtonClick = function (liId) {
+            console.log("Delete button clicked for item with ID: ".concat(liId));
+            var confirmation = window.confirm("Are you sure you want to delete this item?");
+            if (confirmation) {
+                // Perform the necessary actions for deleting the item with the provided ID
+                console.log("Item with ID ".concat(liId, " will be deleted."));
+                _this.CompletedTodosArray = _this.CompletedTodosArray.filter(function (element) { return element.id !== Number(liId); });
+                _this.completedDisplayHandler();
+            }
+            else {
+                // Cancelled deletion
+                console.log("Deletion cancelled.");
             }
         };
         //Sets up event listeners for each Todo item in the list.
@@ -118,8 +156,6 @@ var TodoList = /** @class */ (function () {
         this.result = "";
         this.CompletedTodosArray = [];
         this.todosArray = [];
-        this.itemCount = 0;
-        console.log('hello my darkness my only friends');
         this.addButtonHandler();
     }
     //Modifies the style of the Todo items based on their completion status.

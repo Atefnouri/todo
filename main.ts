@@ -22,10 +22,7 @@ class TodoList {
       this.result = "";
       this.CompletedTodosArray = [];
       this.todosArray = [];
-      this.itemCount = 0;
-      console.log('hello my darkness my only friends');
-
-
+ 
       this.addButtonHandler();
     }
 
@@ -115,8 +112,24 @@ class TodoList {
 
       const li = document.createElement('li');
       li.textContent = item.task;
+      li.setAttribute('id',item.id.toString());
       li.style.color = 'gray';
       li.style.textDecoration = 'line-through';
+      // Create the button element
+      const deleteButton = document.createElement("button");
+     
+      deleteButton.textContent = "Delete";
+      deleteButton.setAttribute('id',"del");
+        // Add the button to the list item
+        li.appendChild(deleteButton);
+
+     /* const undoButton = document.createElement("button");
+      undoButton.textContent = "Undo";
+      li.appendChild(undoButton);*/
+
+    
+ 
+
       //add to the main area
       completedArea?.appendChild(li);
     });
@@ -126,9 +139,46 @@ class TodoList {
       this.emptyMsg!.hidden = false;
     }
 
+    this.addClickEventsToButtons();
+
   }
   
 
+
+   addClickEventsToButtons = () => {
+    const listItems = document.querySelectorAll<HTMLLIElement>("#completedList li");
+  
+    listItems.forEach((li) => {
+      const deleteButton = li.querySelector<HTMLButtonElement>("#del");
+      const liId = li.id;
+  
+      if (deleteButton) {
+        deleteButton.addEventListener("click", () => {
+          this.handleButtonClick(liId);
+        });
+      }
+    });
+  }
+  
+  // Perform the necessary actions for deleting the item with the provided ID
+   handleButtonClick = (liId: string) => {
+    console.log(`Delete button clicked for item with ID: ${liId}`);
+    const confirmation = window.confirm("Are you sure you want to delete this item?");
+  
+    if (confirmation) {
+      // Perform the necessary actions for deleting the item with the provided ID
+      console.log(`Item with ID ${liId} will be deleted.`);
+      this.CompletedTodosArray = this.CompletedTodosArray.filter((element) => element.id !== Number(liId));
+      this.completedDisplayHandler();
+
+    } else {
+      // Cancelled deletion
+      console.log("Deletion cancelled.");
+  
+  }
+
+}
+  
 
 
   //Sets up event listeners for each Todo item in the list.
