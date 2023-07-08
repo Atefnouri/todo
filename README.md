@@ -8,8 +8,7 @@ This is a simple Todo List application built using pure TypeScript.
 - Mark tasks as completed
 - undo completed task and restore to main list
 - Delete tasks from the list
-
-- Filter tasks by status (all, completed, active)
+- add local storage support
 
 ## Technologies Used
 

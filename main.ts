@@ -24,7 +24,19 @@ class TodoList {
       this.todosArray = [];
  
       this.addButtonHandler();
+      this.localStorageHandler();
+      this.disPlayHandlerTrigger();
     }
+
+
+     localStorageHandler() {
+      // Retrieve the string from local storage
+const todoArrayLocalStorage = localStorage.getItem("todosArray");
+if (todoArrayLocalStorage) {
+  // Parse the string back into an array
+    this.todosArray  = JSON.parse(todoArrayLocalStorage);
+}
+}
 
 
   //Modifies the style of the Todo items based on their completion status.
@@ -69,7 +81,11 @@ class TodoList {
      itemObject.completed = true;
     this.todosArray = this.todosArray.filter((item) => item.id !== $id);
     console.table(this.todosArray);
+    this.updateLocalStorages();  
     this.CompletedTodosArray.push(itemObject);
+
+
+
     this.disPlayHandlerTrigger();
     this.completedDisplayHandler();
 
@@ -285,10 +301,19 @@ class TodoList {
 
         //reset field after adding to list
         this.input!.value = '';
-  
+
+
+        this.updateLocalStorages();  
         this.disPlayHandlerTrigger(); 
     }
 
+
+    updateLocalStorages() {
+                  // Convert the array to a string
+    const elementsString = JSON.stringify(this.todosArray);
+    // Save the string in local storage
+    localStorage.setItem("todosArray", elementsString);
+    }
 
     //Displays the Todo items in the main list area.
     disPlayHandlerTrigger = () => {

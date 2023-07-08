@@ -145,6 +145,7 @@ var TodoList = /** @class */ (function () {
             });
             //reset field after adding to list
             _this.input.value = '';
+            _this.updateLocalStorages();
             _this.disPlayHandlerTrigger();
         };
         //Displays the Todo items in the main list area.
@@ -185,7 +186,17 @@ var TodoList = /** @class */ (function () {
         this.CompletedTodosArray = [];
         this.todosArray = [];
         this.addButtonHandler();
+        this.localStorageHandler();
+        this.disPlayHandlerTrigger();
     }
+    TodoList.prototype.localStorageHandler = function () {
+        // Retrieve the string from local storage
+        var todoArrayLocalStorage = localStorage.getItem("todosArray");
+        if (todoArrayLocalStorage) {
+            // Parse the string back into an array
+            this.todosArray = JSON.parse(todoArrayLocalStorage);
+        }
+    };
     //Modifies the style of the Todo items based on their completion status.
     TodoList.prototype.addStyleChange = function () {
         console.log('style is called');
@@ -219,6 +230,7 @@ var TodoList = /** @class */ (function () {
             itemObject.completed = true;
             this.todosArray = this.todosArray.filter(function (item) { return item.id !== $id; });
             console.table(this.todosArray);
+            this.updateLocalStorages();
             this.CompletedTodosArray.push(itemObject);
             this.disPlayHandlerTrigger();
             this.completedDisplayHandler();
@@ -232,6 +244,12 @@ var TodoList = /** @class */ (function () {
         //  if(itemObject?.completed ){
         //  }
         //this.addStyleChange();
+    };
+    TodoList.prototype.updateLocalStorages = function () {
+        // Convert the array to a string
+        var elementsString = JSON.stringify(this.todosArray);
+        // Save the string in local storage
+        localStorage.setItem("todosArray", elementsString);
     };
     return TodoList;
 }());
