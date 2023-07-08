@@ -117,18 +117,16 @@ class TodoList {
       li.style.textDecoration = 'line-through';
       // Create the button element
       const deleteButton = document.createElement("button");
-     
       deleteButton.textContent = "Delete";
       deleteButton.setAttribute('id',"del");
         // Add the button to the list item
         li.appendChild(deleteButton);
 
-     /* const undoButton = document.createElement("button");
+      //create the untdo button element  
+     const undoButton = document.createElement("button");
       undoButton.textContent = "Undo";
-      li.appendChild(undoButton);*/
-
-    
- 
+      undoButton.setAttribute('id',"undo");
+      li.appendChild(undoButton);
 
       //add to the main area
       completedArea?.appendChild(li);
@@ -139,12 +137,14 @@ class TodoList {
       this.emptyMsg!.hidden = false;
     }
 
+    //add the event listeners
     this.addClickEventsToButtons();
+    this.undoButtonEventHandler();
 
   }
   
 
-
+  //delete button event handler
    addClickEventsToButtons = () => {
     const listItems = document.querySelectorAll<HTMLLIElement>("#completedList li");
   
@@ -158,9 +158,27 @@ class TodoList {
         });
       }
     });
+
+  }
+
+
+  //undo button event handler
+  undoButtonEventHandler= () => {
+    const listItems = document.querySelectorAll<HTMLLIElement>("#completedList li");
+  
+    listItems.forEach((li) => {
+      const undoButton = li.querySelector<HTMLButtonElement>("#undo");
+      const liId = li.id;
+  
+      if (undoButton) {
+        undoButton.addEventListener("click", () => {
+          this.undoButtonHandler(liId);
+        });
+      }
+    });
   }
   
-  // Perform the necessary actions for deleting the item with the provided ID
+  // Perform the necessary actions for deleting the item from the completed list with the provided ID
    handleButtonClick = (liId: string) => {
     console.log(`Delete button clicked for item with ID: ${liId}`);
     const confirmation = window.confirm("Are you sure you want to delete this item?");
@@ -178,25 +196,39 @@ class TodoList {
   }
 
 }
+
+
+
+  // Perform the necessary actions for deleting the item with the provided ID
+  undoButtonHandler = (liId: string) => {
+    console.log(`undo button clicked for item with ID: ${liId}`);
+    let restoredObject  = this.CompletedTodosArray.find((element) => element.id === Number(liId));
+      const confirmation = window.confirm("Are you sure you want to restore this item back?");
+  //return;
+    if (confirmation) {
+      //restore the item to the todo list
+      if(restoredObject){
+        this.todosArray.push(restoredObject);
+      }
+      //delete the item with the provided ID
+      this.CompletedTodosArray = this.CompletedTodosArray.filter((element) => element.id !== Number(liId));
+      //disply result
+      this.completedDisplayHandler();
+      this.disPlayHandlerTrigger();
+
+    } else {
+      // Cancelled deletion
+      console.log("Restoer cancelled.");
   
+  }
+
+}
+ 
 
 
-  //Sets up event listeners for each Todo item in the list.
-  //   addEventHandler =  ( ) => {
-      
-  //    const myList = document.getElementById("listdiv");
-  //    const liElements = myList?.getElementsByTagName("li");
-  //     if(liElements){
-  //       for (let i = 0; i < liElements.length; i++) {
-  //         liElements[i].addEventListener("click", () => {
-  //           console.log(`Clicked on item ${i+1}`);
-            
-  //           this.handleClickOnItem(i+1);
-  
-  //         })};
-  //     }
 
-  // }
+
+
 
 
   addEventHandler = () => {

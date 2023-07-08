@@ -25,9 +25,11 @@ var TodoList = /** @class */ (function () {
                 deleteButton.setAttribute('id', "del");
                 // Add the button to the list item
                 li.appendChild(deleteButton);
-                /* const undoButton = document.createElement("button");
-                 undoButton.textContent = "Undo";
-                 li.appendChild(undoButton);*/
+                //create the untdo button element  
+                var undoButton = document.createElement("button");
+                undoButton.textContent = "Undo";
+                undoButton.setAttribute('id', "undo");
+                li.appendChild(undoButton);
                 //add to the main area
                 completedArea === null || completedArea === void 0 ? void 0 : completedArea.appendChild(li);
             });
@@ -35,8 +37,11 @@ var TodoList = /** @class */ (function () {
             if (_this.todosArray.length === 0) {
                 _this.emptyMsg.hidden = false;
             }
+            //add the event listeners
             _this.addClickEventsToButtons();
+            _this.undoButtonEventHandler();
         };
+        //delete button event handler
         this.addClickEventsToButtons = function () {
             var listItems = document.querySelectorAll("#completedList li");
             listItems.forEach(function (li) {
@@ -49,7 +54,20 @@ var TodoList = /** @class */ (function () {
                 }
             });
         };
-        // Perform the necessary actions for deleting the item with the provided ID
+        //undo button event handler
+        this.undoButtonEventHandler = function () {
+            var listItems = document.querySelectorAll("#completedList li");
+            listItems.forEach(function (li) {
+                var undoButton = li.querySelector("#undo");
+                var liId = li.id;
+                if (undoButton) {
+                    undoButton.addEventListener("click", function () {
+                        _this.undoButtonHandler(liId);
+                    });
+                }
+            });
+        };
+        // Perform the necessary actions for deleting the item from the completed list with the provided ID
         this.handleButtonClick = function (liId) {
             console.log("Delete button clicked for item with ID: ".concat(liId));
             var confirmation = window.confirm("Are you sure you want to delete this item?");
@@ -64,18 +82,28 @@ var TodoList = /** @class */ (function () {
                 console.log("Deletion cancelled.");
             }
         };
-        //Sets up event listeners for each Todo item in the list.
-        //   addEventHandler =  ( ) => {
-        //    const myList = document.getElementById("listdiv");
-        //    const liElements = myList?.getElementsByTagName("li");
-        //     if(liElements){
-        //       for (let i = 0; i < liElements.length; i++) {
-        //         liElements[i].addEventListener("click", () => {
-        //           console.log(`Clicked on item ${i+1}`);
-        //           this.handleClickOnItem(i+1);
-        //         })};
-        //     }
-        // }
+        // Perform the necessary actions for deleting the item with the provided ID
+        this.undoButtonHandler = function (liId) {
+            console.log("undo button clicked for item with ID: ".concat(liId));
+            var restoredObject = _this.CompletedTodosArray.find(function (element) { return element.id === Number(liId); });
+            var confirmation = window.confirm("Are you sure you want to restore this item back?");
+            //return;
+            if (confirmation) {
+                //restore the item to the todo list
+                if (restoredObject) {
+                    _this.todosArray.push(restoredObject);
+                }
+                //delete the item with the provided ID
+                _this.CompletedTodosArray = _this.CompletedTodosArray.filter(function (element) { return element.id !== Number(liId); });
+                //disply result
+                _this.completedDisplayHandler();
+                _this.disPlayHandlerTrigger();
+            }
+            else {
+                // Cancelled deletion
+                console.log("Restoer cancelled.");
+            }
+        };
         this.addEventHandler = function () {
             var myList = document.getElementById("listdiv");
             var liElements = myList === null || myList === void 0 ? void 0 : myList.getElementsByTagName("li");
