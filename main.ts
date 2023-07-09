@@ -26,26 +26,25 @@ class TodoList {
       this.addButtonHandler();
       this.localStorageHandler();
       this.disPlayHandlerTrigger();
+      this.completedDisplayHandler();
     }
 
 
      localStorageHandler() {
+
       // Retrieve the string from local storage
-const todoArrayLocalStorage = localStorage.getItem("todosArray");
-if (todoArrayLocalStorage) {
-  // Parse the string back into an array
-    this.todosArray  = JSON.parse(todoArrayLocalStorage);
-    
-    //remove the empty message string if table is not empty
-    this.todosArray.length > 0 ? this.emptyMsg!.hidden = true : this.emptyMsg!.hidden = false 
+      const todoLocalStorageInstce  = localStorage.getItem("todosArray");
+      const completeLocalStorageInstce = localStorage.getItem("CompletedTodosArray");
+
+      todoLocalStorageInstce ? this.todosArray = JSON.parse(todoLocalStorageInstce): this.todosArray = [];
+      completeLocalStorageInstce ? this.CompletedTodosArray = JSON.parse(completeLocalStorageInstce): this.CompletedTodosArray = [];
+
 }
-}
+
 
 
   //Modifies the style of the Todo items based on their completion status.
     addStyleChange() {
-      
-
       console.log('style is called');
 
         // Select all <li> elements
@@ -84,10 +83,7 @@ if (todoArrayLocalStorage) {
      itemObject.completed = true;
     this.todosArray = this.todosArray.filter((item) => item.id !== $id);
     console.table(this.todosArray);
-    this.updateLocalStorages();  
     this.CompletedTodosArray.push(itemObject);
-
-
 
     this.disPlayHandlerTrigger();
     this.completedDisplayHandler();
@@ -114,7 +110,7 @@ if (todoArrayLocalStorage) {
   // Displays the completed Todo items in a separate area.
   completedDisplayHandler = () => {
 
-
+    this.updateLocalStorageCompleteArray();   
             //count how many task in the array
             let completeCounter = document.querySelector('#itemCompletedCounter');
             if (completeCounter){
@@ -206,6 +202,7 @@ if (todoArrayLocalStorage) {
       // Perform the necessary actions for deleting the item with the provided ID
       console.log(`Item with ID ${liId} will be deleted.`);
       this.CompletedTodosArray = this.CompletedTodosArray.filter((element) => element.id !== Number(liId));
+
       this.completedDisplayHandler();
 
     } else {
@@ -318,9 +315,19 @@ if (todoArrayLocalStorage) {
     localStorage.setItem("todosArray", elementsString);
     }
 
+
+    updateLocalStorageCompleteArray() {
+
+      // Convert the array to a string
+      const elementsString = JSON.stringify(this.CompletedTodosArray);
+      // Save the string in local storage
+      localStorage.setItem("CompletedTodosArray", elementsString);
+}
+
+
     //Displays the Todo items in the main list area.
     disPlayHandlerTrigger = () => {
-
+      this.updateLocalStorages();
       //reset field
         this.result = "";
         let taskArea = document.querySelector('#listdiv');

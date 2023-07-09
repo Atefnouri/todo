@@ -3,6 +3,7 @@ var TodoList = /** @class */ (function () {
         var _this = this;
         // Displays the completed Todo items in a separate area.
         this.completedDisplayHandler = function () {
+            _this.updateLocalStorageCompleteArray();
             //count how many task in the array
             var completeCounter = document.querySelector('#itemCompletedCounter');
             if (completeCounter) {
@@ -150,6 +151,7 @@ var TodoList = /** @class */ (function () {
         };
         //Displays the Todo items in the main list area.
         this.disPlayHandlerTrigger = function () {
+            _this.updateLocalStorages();
             //reset field
             _this.result = "";
             var taskArea = document.querySelector('#listdiv');
@@ -188,16 +190,14 @@ var TodoList = /** @class */ (function () {
         this.addButtonHandler();
         this.localStorageHandler();
         this.disPlayHandlerTrigger();
+        this.completedDisplayHandler();
     }
     TodoList.prototype.localStorageHandler = function () {
         // Retrieve the string from local storage
-        var todoArrayLocalStorage = localStorage.getItem("todosArray");
-        if (todoArrayLocalStorage) {
-            // Parse the string back into an array
-            this.todosArray = JSON.parse(todoArrayLocalStorage);
-            //remove the empty message string if table is not empty
-            this.todosArray.length > 0 ? this.emptyMsg.hidden = true : this.emptyMsg.hidden = false;
-        }
+        var todoLocalStorageInstce = localStorage.getItem("todosArray");
+        var completeLocalStorageInstce = localStorage.getItem("CompletedTodosArray");
+        todoLocalStorageInstce ? this.todosArray = JSON.parse(todoLocalStorageInstce) : this.todosArray = [];
+        completeLocalStorageInstce ? this.CompletedTodosArray = JSON.parse(completeLocalStorageInstce) : this.CompletedTodosArray = [];
     };
     //Modifies the style of the Todo items based on their completion status.
     TodoList.prototype.addStyleChange = function () {
@@ -232,7 +232,6 @@ var TodoList = /** @class */ (function () {
             itemObject.completed = true;
             this.todosArray = this.todosArray.filter(function (item) { return item.id !== $id; });
             console.table(this.todosArray);
-            this.updateLocalStorages();
             this.CompletedTodosArray.push(itemObject);
             this.disPlayHandlerTrigger();
             this.completedDisplayHandler();
@@ -252,6 +251,12 @@ var TodoList = /** @class */ (function () {
         var elementsString = JSON.stringify(this.todosArray);
         // Save the string in local storage
         localStorage.setItem("todosArray", elementsString);
+    };
+    TodoList.prototype.updateLocalStorageCompleteArray = function () {
+        // Convert the array to a string
+        var elementsString = JSON.stringify(this.CompletedTodosArray);
+        // Save the string in local storage
+        localStorage.setItem("CompletedTodosArray", elementsString);
     };
     return TodoList;
 }());
