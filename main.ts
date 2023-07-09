@@ -327,6 +327,9 @@ class TodoList {
 
     //Displays the Todo items in the main list area.
     disPlayHandlerTrigger = () => {
+
+      this.todosArray.length > 0 ?  this.emptyMsg!.hidden = true : this.emptyMsg!.hidden = false;
+
       this.updateLocalStorages();
       //reset field
         this.result = "";

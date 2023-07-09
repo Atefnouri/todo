@@ -151,6 +151,7 @@ var TodoList = /** @class */ (function () {
         };
         //Displays the Todo items in the main list area.
         this.disPlayHandlerTrigger = function () {
+            _this.todosArray.length > 0 ? _this.emptyMsg.hidden = true : _this.emptyMsg.hidden = false;
             _this.updateLocalStorages();
             //reset field
             _this.result = "";
