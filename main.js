@@ -195,6 +195,8 @@ var TodoList = /** @class */ (function () {
         if (todoArrayLocalStorage) {
             // Parse the string back into an array
             this.todosArray = JSON.parse(todoArrayLocalStorage);
+            //remove the empty message string if table is not empty
+            this.todosArray.length > 0 ? this.emptyMsg.hidden = true : this.emptyMsg.hidden = false;
         }
     };
     //Modifies the style of the Todo items based on their completion status.
