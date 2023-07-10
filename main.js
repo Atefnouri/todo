@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var TodoList = /** @class */ (function () {
     function TodoList() {
         var _this = this;
@@ -170,7 +172,7 @@ var TodoList = /** @class */ (function () {
             var item = "";
             _this.todosArray.forEach(function (el) {
                 // if(el.completed === false){
-                item = "<li  id=\"".concat(el.id, "\">  ").concat(el.task, " </li> ");
+                item = "<li  id=\"".concat(el.id, "\">  ").concat(el.task, " </li> <button (click)=\"alert(edit)\" >edit</button>");
                 //} 
                 _this.result += (item);
             });

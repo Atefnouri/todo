@@ -1,8 +1,4 @@
-interface Todo {
-  id: number;
-  task: string;
-  completed: boolean;
-}
+import { Todo } from './ITodo';
 
 class TodoList {
  
@@ -12,6 +8,7 @@ class TodoList {
     input: HTMLInputElement | null ;
     button : Element | null;
     emptyMsg:HTMLElement | null;
+  
 
     constructor() {
     
@@ -354,7 +351,7 @@ class TodoList {
       let item :string  = "";
       this.todosArray.forEach(el => {
        // if(el.completed === false){
-          item = `<li  id="${el.id}">  ${el.task} </li> `;
+          item = `<li  id="${el.id}">  ${el.task} </li> <button (click)="alert(edit)" >edit</button>`;
         //} 
       
         this.result += (item);

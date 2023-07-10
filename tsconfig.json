@@ -1,10 +1,7 @@
 {
     "compilerOptions": {
-        "target": "es6",
-        "lib": ["es6", "dom"],
-        "outDir": "./dist",
-        "strict": true,
-        "module": "commonjs"
-      }
+      "target": "es6",  // 👈️ set this to es6
+      // "module": "commonjs", // 👈️ REMOVE this (if browser env)
+    }
   }
   
