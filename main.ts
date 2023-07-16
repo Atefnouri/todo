@@ -19,7 +19,7 @@ class TodoList {
       this.result = "";
       this.CompletedTodosArray = [];
       this.todosArray = [];
- 
+
       this.addButtonHandler();
       this.localStorageHandler();
       this.disPlayHandlerTrigger();
@@ -240,10 +240,7 @@ class TodoList {
 
 
 
-
-
-
-
+//add eventlistener to the main task list
   addEventHandler = () => {
     const myList = document.getElementById("listdiv");
     const liElements = myList?.getElementsByTagName("li");
@@ -262,6 +259,104 @@ class TodoList {
   }
   
 
+
+
+  addEnterKeyOnEditField = () => {
+    const myList = document.getElementById("listdiv");
+    const inputArray = myList?.getElementsByTagName("input");
+  
+    if (inputArray) {
+      for (let i = 0; i < inputArray.length; i++) {
+        const field = inputArray[i];
+        const id = field.getAttribute("id");
+  
+        field.addEventListener("click", () => {
+          console.log(`Clicked on item ${id}`);
+          //this.showEditFiedl(id);
+          //this.handleClickOnItem(Number(id));
+        });
+      }
+    }
+
+   }
+
+    findObjectById(id: number): any | undefined {
+    
+      const equalid = (element) => element.id === id;
+      const foundObject = this.todosArray.findIndex(equalid);
+      return foundObject;
+  }
+
+
+   updateTaskList  = (id:string,newText:string) => { 
+
+    let selecteTaskIndex = this. findObjectById(Number(id));
+    this.todosArray[selecteTaskIndex].task = newText;
+    this.disPlayHandlerTrigger(); 
+
+   }
+
+//show edit field and addevet ok key enter evenr listener
+  showEditFiedl = (id:string) => {
+    console.log(`show filter: ${id}`);
+    const myList = document.getElementById("listdiv");
+    const textField = myList?.querySelector<HTMLInputElement>('#text'+id);
+    // const editButton = myList?.querySelector<HTMLButtonElement>('#'+id);
+    // if (editButton) {
+    //   editButton.textContent = "confim";
+    // }
+    console.log(textField);
+    if (textField) {
+      textField.hidden = false;
+      textField.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+  
+          this.updateTaskList(id,textField.value);
+          textField.hidden = true;
+          
+        }
+      });
+    }
+
+   }
+
+
+
+  //add event listeners to the edit button
+  editButtonEventListener = () => {
+    const myList = document.getElementById("listdiv");
+    const buttonArray = myList?.getElementsByTagName("button");
+  
+    if (buttonArray) {
+      for (let i = 0; i < buttonArray.length; i++) {
+        const bt = buttonArray[i];
+        const id = bt.getAttribute("id");
+  
+        bt.addEventListener("click", () => {
+          console.log(`Clicked on item ${id}`);
+          this.showEditFiedl(id);
+          //this.handleClickOnItem(Number(id));
+        });
+      }
+    }
+  }
+  
+
+  updateLocalStorages() {
+    // Convert the array to a string
+const elementsString = JSON.stringify(this.todosArray);
+// Save the string in local storage
+localStorage.setItem("todosArray", elementsString);
+}
+
+
+updateLocalStorageCompleteArray() {
+
+// Convert the array to a string
+const elementsString = JSON.stringify(this.CompletedTodosArray);
+// Save the string in local storage
+localStorage.setItem("CompletedTodosArray", elementsString);
+}
 
 
 
@@ -305,21 +400,6 @@ class TodoList {
     }
 
 
-    updateLocalStorages() {
-                  // Convert the array to a string
-    const elementsString = JSON.stringify(this.todosArray);
-    // Save the string in local storage
-    localStorage.setItem("todosArray", elementsString);
-    }
-
-
-    updateLocalStorageCompleteArray() {
-
-      // Convert the array to a string
-      const elementsString = JSON.stringify(this.CompletedTodosArray);
-      // Save the string in local storage
-      localStorage.setItem("CompletedTodosArray", elementsString);
-}
 
 
     //Displays the Todo items in the main list area.
@@ -351,7 +431,8 @@ class TodoList {
       let item :string  = "";
       this.todosArray.forEach(el => {
        // if(el.completed === false){
-          item = `<li  id="${el.id}">  ${el.task} </li> <button (click)="alert(edit)" >edit</button>`;
+          item = `<li  id="${el.id}">  ${el.task} </li> <button id="${el.id}" >edit</button>
+          <input type="text" id="text${el.id}" value="${el.task}" hidden > `;
         //} 
       
         this.result += (item);
@@ -361,7 +442,9 @@ class TodoList {
       taskArea.innerHTML = this.result;
       }
       console.log('loop trough items ✅');
+
     this.addEventHandler();
+    this.editButtonEventListener();
     //this.addStyleChange();
     }
 

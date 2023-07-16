@@ -107,6 +107,7 @@ var TodoList = /** @class */ (function () {
                 console.log("Restoer cancelled.");
             }
         };
+        //add eventlistener to the main task list
         this.addEventHandler = function () {
             var myList = document.getElementById("listdiv");
             var liElements = myList === null || myList === void 0 ? void 0 : myList.getElementsByTagName("li");
@@ -121,6 +122,68 @@ var TodoList = /** @class */ (function () {
                 };
                 for (var i = 0; i < liElements.length; i++) {
                     _loop_1(i);
+                }
+            }
+        };
+        this.addEnterKeyOnEditField = function () {
+            var myList = document.getElementById("listdiv");
+            var inputArray = myList === null || myList === void 0 ? void 0 : myList.getElementsByTagName("input");
+            if (inputArray) {
+                var _loop_2 = function (i) {
+                    var field = inputArray[i];
+                    var id = field.getAttribute("id");
+                    field.addEventListener("click", function () {
+                        console.log("Clicked on item ".concat(id));
+                        //this.showEditFiedl(id);
+                        //this.handleClickOnItem(Number(id));
+                    });
+                };
+                for (var i = 0; i < inputArray.length; i++) {
+                    _loop_2(i);
+                }
+            }
+        };
+        this.updateTaskList = function (id, newText) {
+            var selecteTaskIndex = _this.findObjectById(Number(id));
+            _this.todosArray[selecteTaskIndex].task = newText;
+            _this.disPlayHandlerTrigger();
+        };
+        //show edit field and addevet ok key enter evenr listener
+        this.showEditFiedl = function (id) {
+            console.log("show filter: ".concat(id));
+            var myList = document.getElementById("listdiv");
+            var textField = myList === null || myList === void 0 ? void 0 : myList.querySelector('#text' + id);
+            // const editButton = myList?.querySelector<HTMLButtonElement>('#'+id);
+            // if (editButton) {
+            //   editButton.textContent = "confim";
+            // }
+            console.log(textField);
+            if (textField) {
+                textField.hidden = false;
+                textField.addEventListener("keypress", function (event) {
+                    if (event.key === "Enter") {
+                        _this.updateTaskList(id, textField.value);
+                        textField.hidden = true;
+                    }
+                });
+            }
+        };
+        //add event listeners to the edit button
+        this.editButtonEventListener = function () {
+            var myList = document.getElementById("listdiv");
+            var buttonArray = myList === null || myList === void 0 ? void 0 : myList.getElementsByTagName("button");
+            if (buttonArray) {
+                var _loop_3 = function (i) {
+                    var bt = buttonArray[i];
+                    var id = bt.getAttribute("id");
+                    bt.addEventListener("click", function () {
+                        console.log("Clicked on item ".concat(id));
+                        _this.showEditFiedl(id);
+                        //this.handleClickOnItem(Number(id));
+                    });
+                };
+                for (var i = 0; i < buttonArray.length; i++) {
+                    _loop_3(i);
                 }
             }
         };
@@ -172,7 +235,7 @@ var TodoList = /** @class */ (function () {
             var item = "";
             _this.todosArray.forEach(function (el) {
                 // if(el.completed === false){
-                item = "<li  id=\"".concat(el.id, "\">  ").concat(el.task, " </li> <button (click)=\"alert(edit)\" >edit</button>");
+                item = "<li  id=\"".concat(el.id, "\">  ").concat(el.task, " </li> <button id=\"").concat(el.id, "\" >edit</button>\n          <input type=\"text\" id=\"text").concat(el.id, "\" value=\"").concat(el.task, "\" hidden > ");
                 //} 
                 _this.result += (item);
             });
@@ -181,6 +244,7 @@ var TodoList = /** @class */ (function () {
             }
             console.log('loop trough items ✅');
             _this.addEventHandler();
+            _this.editButtonEventListener();
             //this.addStyleChange();
         };
         //initialasting
@@ -248,6 +312,11 @@ var TodoList = /** @class */ (function () {
         //  if(itemObject?.completed ){
         //  }
         //this.addStyleChange();
+    };
+    TodoList.prototype.findObjectById = function (id) {
+        var equalid = function (element) { return element.id === id; };
+        var foundObject = this.todosArray.findIndex(equalid);
+        return foundObject;
     };
     TodoList.prototype.updateLocalStorages = function () {
         // Convert the array to a string
