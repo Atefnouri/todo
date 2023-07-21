@@ -1,7 +1,9 @@
 
 body {
 
-  background-color: #7f7f82;
+  background-color: #181820;
+  color:  white;
+
 
 }
 
@@ -11,5 +13,75 @@ body {
   }
   
 
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* To make it round */
+    /* Add any other styling you want for the avatar here */
+  }
+  
+.custom-input {
+  background-color: #383842;
+  color: #fff;
+  height: 50px;
+  padding: 20px;
+  border-radius: 10px;
+}
 
+/* Optional: You can style the placeholder text color as well */
+.custom-input::placeholder {
+  color: #888;
+}
+
+.indicator{
+background-color:#4781F2;
+color:#fff;
+height: 20px;
+width: 20px;
+display: inline-block;  
+border-radius: 5px;
+text-align: center;
+padding: 1px;
+font-size: 12px;
+margin-right: 5px;
+}
+
+.task-header{
+  background-color: #272732 ;
+  height: 50px;
+  padding: 10px;
+  font-weight: bold;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.task-item{
+  background-color: #21212B ;
+  height: 50px;
+  border-bottom: 1px solid #272732;
+}
+
+.task-dot{
+  background-color:#4781F2;
+color:#fff;
+height: 8px;
+width: 8px;
+display: inline-block;  
+border-radius: 50%;
+text-align: center;
+padding: 1px;
+font-size: 12px;
+margin-right: 5px;
+}
+
+.task-date{
+  color:red;
+  font-size: 11px;
+  margin-left: 10px;
+
+}
   
