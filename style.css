@@ -46,6 +46,9 @@ font-size: 12px;
 margin-right: 5px;
 }
 
+
+
+
 .task-header{
   background-color: #272732 ;
   height: 50px;
@@ -78,10 +81,49 @@ font-size: 12px;
 margin-right: 5px;
 }
 
+
+
+
+.complete-task-dot {
+
+background-color:#8E8989;
+height: 8px;
+width: 8px;
+display: inline-block;  
+border-radius: 50%;
+text-align: center;
+padding: 1px;
+font-size: 12px;
+margin-right: 5px;
+
+}
+
+
+.complete-indicator {
+
+background-color:#8E8989;
+color:#fff;
+height: 20px;
+width: 20px;
+display: inline-block;  
+border-radius: 5px;
+text-align: center;
+padding: 1px;
+font-size: 12px;
+margin-right: 5px;
+
+}
+
 .task-date{
   color:red;
   font-size: 11px;
   margin-left: 10px;
 
+}
+
+
+.completed-task{
+color: #8E8989;
+text-decoration: line-through;
 }
   
