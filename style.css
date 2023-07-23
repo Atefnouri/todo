@@ -62,10 +62,16 @@ margin-right: 5px;
   border-top-right-radius: 5px;
 }
 
-.task-item{
+.task-item,.complete-task-item{
   background-color: #21212B ;
   height: 50px;
   border-bottom: 1px solid #272732;
+  padding-left: 15px;
+}
+.task-item:hover{
+  background-color: #484851 ;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .task-dot{
@@ -127,3 +133,13 @@ color: #8E8989;
 text-decoration: line-through;
 }
   
+
+#listdiv , #completedList{
+  padding: 0px;
+}
+
+.action-button{
+    float: right;
+    margin-right: 10px;
+    margin-top: 9px;
+}

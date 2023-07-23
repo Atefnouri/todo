@@ -6,36 +6,43 @@ var TodoList = /** @class */ (function () {
         // Displays the completed Todo items in a separate area.
         this.completedDisplayHandler = function () {
             _this.updateLocalStorageCompleteArray();
+            //reset field
+            _this.completeResult = "";
+            var completedArea = document.querySelector('#completedList');
+            if (completedArea) {
+                completedArea.innerHTML = "";
+            }
             //count how many task in the array
             var completeCounter = document.querySelector('#itemCompletedCounter');
             if (completeCounter) {
                 completeCounter.innerHTML = _this.CompletedTodosArray.length.toString();
             }
-            //reset field
-            var completedArea = document.querySelector('#completedList');
-            if (completedArea) {
-                completedArea.innerHTML = "";
-            }
+            var completeItem = "";
             _this.CompletedTodosArray.forEach(function (item) {
-                var li = document.createElement('li');
-                li.textContent = item.task;
-                li.setAttribute('id', item.id.toString());
-                li.style.color = 'gray';
-                li.style.textDecoration = 'line-through';
+                completeItem = "<div class=\"col-md-12 complete-task-item\" id=\"".concat(item.id, "\">\n     <span class=\"complete-task-dot\"></span>\n     <span class=\"completed-task\"> ").concat(item.task, "</span>\n     <button type=\"button\"\n     class=\"btn btn-outline-danger btn-sm action-button\">\n     Light\n    </button> \n\n    <button type=\"button\"\n    class=\"btn btn-outline-light btn-sm action-button\">\n    Light\n   </button> \n   \n     <div class=\"row\">\n       <div class=\"col-md-12 task-date\">\n         07-07-2023\n       </div>\n     </div>\n     </div>");
+                // const li = document.createElement('li');
+                // li.textContent = item.task;
+                // li.setAttribute('id',item.id.toString());
+                // li.style.color = 'gray';
+                // li.style.textDecoration = 'line-through';
                 // Create the button element
-                var deleteButton = document.createElement("button");
-                deleteButton.textContent = "Delete";
-                deleteButton.setAttribute('id', "del");
-                // Add the button to the list item
-                li.appendChild(deleteButton);
+                // const deleteButton = document.createElement("button");
+                // deleteButton.textContent = "Delete";
+                // deleteButton.setAttribute('id',"del");
+                //   // Add the button to the list item
+                //   li.appendChild(deleteButton);
                 //create the untdo button element  
-                var undoButton = document.createElement("button");
-                undoButton.textContent = "Undo";
-                undoButton.setAttribute('id', "undo");
-                li.appendChild(undoButton);
+                //  const undoButton = document.createElement("button");
+                //   undoButton.textContent = "Undo";
+                //   undoButton.setAttribute('id',"undo");
+                //   li.appendChild(undoButton);
                 //add to the main area
-                completedArea === null || completedArea === void 0 ? void 0 : completedArea.appendChild(li);
+                // completedArea?.appendChild(li);
+                _this.completeResult += (completeItem);
             });
+            if (completedArea) {
+                completedArea.innerHTML = _this.completeResult;
+            }
             //console.table(this.CompletedTodosArray);
             if (_this.todosArray.length === 0) {
                 _this.emptyMsg.hidden = false;
@@ -110,17 +117,18 @@ var TodoList = /** @class */ (function () {
         //add eventlistener to the main task list
         this.addEventHandler = function () {
             var myList = document.getElementById("listdiv");
-            var liElements = myList === null || myList === void 0 ? void 0 : myList.getElementsByTagName("li");
-            if (liElements) {
+            //const liElements = myList?.getElementsByTagName("li");
+            var divArray = myList === null || myList === void 0 ? void 0 : myList.querySelectorAll('div.task-item');
+            if (divArray) {
                 var _loop_1 = function (i) {
-                    var li = liElements[i];
-                    var id = li.getAttribute("id");
-                    li.addEventListener("click", function () {
+                    var item = divArray[i];
+                    var id = item.getAttribute("id");
+                    item.addEventListener("click", function () {
                         console.log("Clicked on item ".concat(id));
                         _this.handleClickOnItem(Number(id));
                     });
                 };
-                for (var i = 0; i < liElements.length; i++) {
+                for (var i = 0; i < divArray.length; i++) {
                     _loop_1(i);
                 }
             }
@@ -187,13 +195,15 @@ var TodoList = /** @class */ (function () {
                 }
             }
         };
-        //: Handles the click event on the add task button.
-        this.addButtonHandler = function () {
-            if (_this.button) {
-                _this.button.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    _this.addToList(_this.input.value);
-                    _this.emptyMsg.hidden = true;
+        // Handles the enter key event to add task to listSt.
+        this.enterKeyHandler = function () {
+            if (_this.input) {
+                _this.input.addEventListener("keypress", function (event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        _this.addToList(_this.input.value);
+                        _this.emptyMsg.hidden = true;
+                    }
                 });
             }
         };
@@ -211,7 +221,7 @@ var TodoList = /** @class */ (function () {
             });
             //reset field after adding to list
             _this.input.value = '';
-            _this.updateLocalStorages();
+            //this.updateLocalStorages();  
             _this.disPlayHandlerTrigger();
         };
         //Displays the Todo items in the main list area.
@@ -234,8 +244,7 @@ var TodoList = /** @class */ (function () {
             console.log('disPlayHandlerTrigger');
             var item = "";
             _this.todosArray.forEach(function (el) {
-                // if(el.completed === false){
-                item = "<li  id=\"".concat(el.id, "\">  ").concat(el.task, " </li> <button id=\"").concat(el.id, "\" >edit</button>\n          <input type=\"text\" id=\"text").concat(el.id, "\" value=\"").concat(el.task, "\" hidden > ");
+                item = "  <div class=\"col-md-12 task-item\" id=\"".concat(el.id, "\">\n          <span class=\"task-dot\"></span><span>  ").concat(el.task, "</span> \n          <div class=\"row\">\n            <div class=\"col-md-12 task-date\">\n              07-07-2023\n            </div>\n          </div>\n          </div>");
                 //} 
                 _this.result += (item);
             });
@@ -252,9 +261,10 @@ var TodoList = /** @class */ (function () {
         this.button = document.querySelector('#addButton');
         this.input = document.querySelector('#task');
         this.result = "";
+        this.completeResult = "";
         this.CompletedTodosArray = [];
         this.todosArray = [];
-        this.addButtonHandler();
+        this.enterKeyHandler();
         this.localStorageHandler();
         this.disPlayHandlerTrigger();
         this.completedDisplayHandler();

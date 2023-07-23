@@ -5,6 +5,7 @@ class TodoList {
     public todosArray: Todo[];
     public CompletedTodosArray: Todo[];
     public result:string;
+    public completeResult:string;
     input: HTMLInputElement | null ;
     button : Element | null;
     emptyMsg:HTMLElement | null;
@@ -17,10 +18,11 @@ class TodoList {
       this.button = document.querySelector('#addButton');
       this.input = document.querySelector('#task') as HTMLInputElement;
       this.result = "";
+      this.completeResult = "";
       this.CompletedTodosArray = [];
       this.todosArray = [];
 
-      this.addButtonHandler();
+      this.enterKeyHandler();
       this.localStorageHandler();
       this.disPlayHandlerTrigger();
       this.completedDisplayHandler();
@@ -107,42 +109,73 @@ class TodoList {
   // Displays the completed Todo items in a separate area.
   completedDisplayHandler = () => {
 
-    this.updateLocalStorageCompleteArray();   
+    this.updateLocalStorageCompleteArray(); 
+
+        //reset field
+      this.completeResult = "";
+      let completedArea = document.querySelector('#completedList');
+      if(completedArea) {
+        completedArea.innerHTML = "";
+      }
+
             //count how many task in the array
             let completeCounter = document.querySelector('#itemCompletedCounter');
             if (completeCounter){
               completeCounter.innerHTML = this.CompletedTodosArray.length.toString();
             } 
 
-      //reset field
-      let completedArea = document.querySelector('#completedList');
-      if(completedArea) {
-        completedArea.innerHTML = "";
-      }
-       
+  
+    let completeItem :string  = ""; 
     this.CompletedTodosArray.forEach((item) => {
 
-      const li = document.createElement('li');
-      li.textContent = item.task;
-      li.setAttribute('id',item.id.toString());
-      li.style.color = 'gray';
-      li.style.textDecoration = 'line-through';
+     completeItem = `<div class="col-md-12 complete-task-item" id="${item.id}">
+     <span class="complete-task-dot"></span>
+     <span class="completed-task"> ${item.task}</span>
+     <button type="button"
+     class="btn btn-outline-danger btn-sm action-button">
+     Light
+    </button> 
+
+    <button type="button"
+    class="btn btn-outline-light btn-sm action-button">
+    Light
+   </button> 
+   
+     <div class="row">
+       <div class="col-md-12 task-date">
+         07-07-2023
+       </div>
+     </div>
+     </div>`; 
+
+
+      // const li = document.createElement('li');
+      // li.textContent = item.task;
+      // li.setAttribute('id',item.id.toString());
+      // li.style.color = 'gray';
+      // li.style.textDecoration = 'line-through';
+
       // Create the button element
-      const deleteButton = document.createElement("button");
-      deleteButton.textContent = "Delete";
-      deleteButton.setAttribute('id',"del");
-        // Add the button to the list item
-        li.appendChild(deleteButton);
+      // const deleteButton = document.createElement("button");
+      // deleteButton.textContent = "Delete";
+      // deleteButton.setAttribute('id',"del");
+      //   // Add the button to the list item
+      //   li.appendChild(deleteButton);
 
       //create the untdo button element  
-     const undoButton = document.createElement("button");
-      undoButton.textContent = "Undo";
-      undoButton.setAttribute('id',"undo");
-      li.appendChild(undoButton);
+    //  const undoButton = document.createElement("button");
+    //   undoButton.textContent = "Undo";
+    //   undoButton.setAttribute('id',"undo");
+    //   li.appendChild(undoButton);
 
       //add to the main area
-      completedArea?.appendChild(li);
+      // completedArea?.appendChild(li);
+      this.completeResult += (completeItem);
     });
+
+    if(completedArea){
+      completedArea.innerHTML = this.completeResult;
+      }
 
     //console.table(this.CompletedTodosArray);
     if(this.todosArray.length === 0) {
@@ -243,14 +276,15 @@ class TodoList {
 //add eventlistener to the main task list
   addEventHandler = () => {
     const myList = document.getElementById("listdiv");
-    const liElements = myList?.getElementsByTagName("li");
+    //const liElements = myList?.getElementsByTagName("li");
+    const divArray = myList?.querySelectorAll('div.task-item');
   
-    if (liElements) {
-      for (let i = 0; i < liElements.length; i++) {
-        const li = liElements[i];
-        const id = li.getAttribute("id");
+    if (divArray) {
+      for (let i = 0; i < divArray.length; i++) {
+        const item = divArray[i];
+        const id = item.getAttribute("id");
   
-        li.addEventListener("click", () => {
+        item.addEventListener("click", () => {
           console.log(`Clicked on item ${id}`);
           this.handleClickOnItem(Number(id));
         });
@@ -360,18 +394,18 @@ localStorage.setItem("CompletedTodosArray", elementsString);
 
 
 
- //: Handles the click event on the add task button.
-  addButtonHandler = ():void =>{
-      if (this.button) {
-        this.button.addEventListener('click', (event) => {
-          event.preventDefault();
-          this.addToList(this.input!.value);
-          this.emptyMsg!.hidden = true;
-        });
-       }
+ // Handles the enter key event to add task to listSt.
+  enterKeyHandler = ():void =>{
+       if (this.input) {
       
-    
-
+        this.input.addEventListener("keypress", (event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            this.addToList(this.input!.value);
+            this.emptyMsg!.hidden = true;        
+          }
+        });
+      }
     }
 
     //Adds a new task to the todosArray.
@@ -395,7 +429,7 @@ localStorage.setItem("CompletedTodosArray", elementsString);
         this.input!.value = '';
 
 
-        this.updateLocalStorages();  
+        //this.updateLocalStorages();  
         this.disPlayHandlerTrigger(); 
     }
 
@@ -430,9 +464,15 @@ localStorage.setItem("CompletedTodosArray", elementsString);
       console.log('disPlayHandlerTrigger');
       let item :string  = "";
       this.todosArray.forEach(el => {
-       // if(el.completed === false){
-          item = `<li  id="${el.id}">  ${el.task} </li> <button id="${el.id}" >edit</button>
-          <input type="text" id="text${el.id}" value="${el.task}" hidden > `;
+      
+          item = `  <div class="col-md-12 task-item" id="${el.id}">
+          <span class="task-dot"></span><span>  ${el.task}</span> 
+          <div class="row">
+            <div class="col-md-12 task-date">
+              07-07-2023
+            </div>
+          </div>
+          </div>`;
         //} 
       
         this.result += (item);
