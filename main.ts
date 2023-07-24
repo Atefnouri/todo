@@ -105,6 +105,27 @@ class TodoList {
   }
 
 
+    // Perform the necessary actions for deleting the item from the completed list with the provided ID
+   handleButtonClick  (liId: string)  {
+    console.log(`Delete button clicked for item with ID: ${liId}`);
+    const confirmation = window.confirm("Are you sure you want to delete this item?");
+    if (confirmation) {
+      // Perform the necessary actions for deleting the item with the provided ID
+      console.log(`Item with ID ${liId} will be deleted.`);
+      this.CompletedTodosArray = this.CompletedTodosArray.filter((element) => element.id !== Number(liId));
+
+      this.completedDisplayHandler();
+
+    } else {
+      // Cancelled deletion
+      console.log("Deletion cancelled.");
+  
+  }
+
+}
+
+
+
 
   // Displays the completed Todo items in a separate area.
   completedDisplayHandler = () => {
@@ -131,14 +152,18 @@ class TodoList {
      completeItem = `<div class="col-md-12 complete-task-item" id="${item.id}">
      <span class="complete-task-dot"></span>
      <span class="completed-task"> ${item.task}</span>
-     <button type="button"
+     <button 
+     type="button"
+     id="del"
      class="btn btn-outline-danger btn-sm action-button">
-     Light
+     Delete
     </button> 
 
-    <button type="button"
+    <button 
+    type="button"
+    id="${item.id}"
     class="btn btn-outline-light btn-sm action-button">
-    Light
+    restore
    </button> 
    
      <div class="row">
@@ -189,17 +214,18 @@ class TodoList {
   }
   
 
+
   //delete button event handler
    addClickEventsToButtons = () => {
-    const listItems = document.querySelectorAll<HTMLLIElement>("#completedList li");
-  
-    listItems.forEach((li) => {
-      const deleteButton = li.querySelector<HTMLButtonElement>("#del");
-      const liId = li.id;
+    const listItems = document.querySelectorAll('div.complete-task-item');
+    listItems.forEach((item) => {
+      const deleteButton = item.querySelector<HTMLButtonElement>("#del");
+      const itemId = item.id;
+      console.log(itemId);
   
       if (deleteButton) {
         deleteButton.addEventListener("click", () => {
-          this.handleButtonClick(liId);
+          this.handleButtonClick(itemId);
         });
       }
     });
@@ -223,25 +249,7 @@ class TodoList {
     });
   }
   
-  // Perform the necessary actions for deleting the item from the completed list with the provided ID
-   handleButtonClick = (liId: string) => {
-    console.log(`Delete button clicked for item with ID: ${liId}`);
-    const confirmation = window.confirm("Are you sure you want to delete this item?");
-  
-    if (confirmation) {
-      // Perform the necessary actions for deleting the item with the provided ID
-      console.log(`Item with ID ${liId} will be deleted.`);
-      this.CompletedTodosArray = this.CompletedTodosArray.filter((element) => element.id !== Number(liId));
 
-      this.completedDisplayHandler();
-
-    } else {
-      // Cancelled deletion
-      console.log("Deletion cancelled.");
-  
-  }
-
-}
 
 
 

@@ -19,7 +19,7 @@ var TodoList = /** @class */ (function () {
             }
             var completeItem = "";
             _this.CompletedTodosArray.forEach(function (item) {
-                completeItem = "<div class=\"col-md-12 complete-task-item\" id=\"".concat(item.id, "\">\n     <span class=\"complete-task-dot\"></span>\n     <span class=\"completed-task\"> ").concat(item.task, "</span>\n     <button type=\"button\"\n     class=\"btn btn-outline-danger btn-sm action-button\">\n     Light\n    </button> \n\n    <button type=\"button\"\n    class=\"btn btn-outline-light btn-sm action-button\">\n    Light\n   </button> \n   \n     <div class=\"row\">\n       <div class=\"col-md-12 task-date\">\n         07-07-2023\n       </div>\n     </div>\n     </div>");
+                completeItem = "<div class=\"col-md-12 complete-task-item\" id=\"".concat(item.id, "\">\n     <span class=\"complete-task-dot\"></span>\n     <span class=\"completed-task\"> ").concat(item.task, "</span>\n     <button \n     type=\"button\"\n     id=\"del\"\n     class=\"btn btn-outline-danger btn-sm action-button\">\n     Delete\n    </button> \n\n    <button \n    type=\"button\"\n    id=\"").concat(item.id, "\"\n    class=\"btn btn-outline-light btn-sm action-button\">\n    restore\n   </button> \n   \n     <div class=\"row\">\n       <div class=\"col-md-12 task-date\">\n         07-07-2023\n       </div>\n     </div>\n     </div>");
                 // const li = document.createElement('li');
                 // li.textContent = item.task;
                 // li.setAttribute('id',item.id.toString());
@@ -53,13 +53,14 @@ var TodoList = /** @class */ (function () {
         };
         //delete button event handler
         this.addClickEventsToButtons = function () {
-            var listItems = document.querySelectorAll("#completedList li");
-            listItems.forEach(function (li) {
-                var deleteButton = li.querySelector("#del");
-                var liId = li.id;
+            var listItems = document.querySelectorAll('div.complete-task-item');
+            listItems.forEach(function (item) {
+                var deleteButton = item.querySelector("#del");
+                var itemId = item.id;
+                console.log(itemId);
                 if (deleteButton) {
                     deleteButton.addEventListener("click", function () {
-                        _this.handleButtonClick(liId);
+                        _this.handleButtonClick(itemId);
                     });
                 }
             });
@@ -76,21 +77,6 @@ var TodoList = /** @class */ (function () {
                     });
                 }
             });
-        };
-        // Perform the necessary actions for deleting the item from the completed list with the provided ID
-        this.handleButtonClick = function (liId) {
-            console.log("Delete button clicked for item with ID: ".concat(liId));
-            var confirmation = window.confirm("Are you sure you want to delete this item?");
-            if (confirmation) {
-                // Perform the necessary actions for deleting the item with the provided ID
-                console.log("Item with ID ".concat(liId, " will be deleted."));
-                _this.CompletedTodosArray = _this.CompletedTodosArray.filter(function (element) { return element.id !== Number(liId); });
-                _this.completedDisplayHandler();
-            }
-            else {
-                // Cancelled deletion
-                console.log("Deletion cancelled.");
-            }
         };
         // Perform the necessary actions for deleting the item with the provided ID
         this.undoButtonHandler = function (liId) {
@@ -322,6 +308,21 @@ var TodoList = /** @class */ (function () {
         //  if(itemObject?.completed ){
         //  }
         //this.addStyleChange();
+    };
+    // Perform the necessary actions for deleting the item from the completed list with the provided ID
+    TodoList.prototype.handleButtonClick = function (liId) {
+        console.log("Delete button clicked for item with ID: ".concat(liId));
+        var confirmation = window.confirm("Are you sure you want to delete this item?");
+        if (confirmation) {
+            // Perform the necessary actions for deleting the item with the provided ID
+            console.log("Item with ID ".concat(liId, " will be deleted."));
+            this.CompletedTodosArray = this.CompletedTodosArray.filter(function (element) { return element.id !== Number(liId); });
+            this.completedDisplayHandler();
+        }
+        else {
+            // Cancelled deletion
+            console.log("Deletion cancelled.");
+        }
     };
     TodoList.prototype.findObjectById = function (id) {
         var equalid = function (element) { return element.id === id; };
