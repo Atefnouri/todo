@@ -19,7 +19,7 @@ var TodoList = /** @class */ (function () {
             }
             var completeItem = "";
             _this.CompletedTodosArray.forEach(function (item) {
-                completeItem = "<div class=\"col-md-12 complete-task-item\" id=\"".concat(item.id, "\">\n     <span class=\"complete-task-dot\"></span>\n     <span class=\"completed-task\"> ").concat(item.task, "</span>\n     <button \n     type=\"button\"\n     id=\"del\"\n     class=\"btn btn-outline-danger btn-sm action-button\">\n     Delete\n    </button> \n\n    <button \n    type=\"button\"\n    id=\"undo\"\n    class=\"btn btn-outline-light btn-sm action-button\">\n    restore\n   </button> \n   \n     <div class=\"row\">\n       <div class=\"col-md-12 task-date\">\n       ").concat(item.date, "\n       </div>\n     </div>\n     </div>");
+                completeItem = "<div class=\"col-md-12 complete-task-item\" id=\"".concat(item.id, "\">\n     <span class=\"complete-task-dot\"></span>\n     <span class=\"completed-task\"> ").concat(item.task, "</span>\n     <button \n     type=\"button\"\n     alt=\"delete item\"\n     id=\"del\"\n     class=\"btn btn-outline-danger btn-sm action-button\">\n     <i class=\"fa-solid fa-trash\"></i>\n    </button> \n \n    <button \n    type=\"button\"\n    id=\"undo\"\n    alt=\"restore item\"\n    class=\"btn btn-outline-light btn-sm action-button\">\n    <i class=\"fa-solid fa-rotate-left\"></i>\n   </button> \n   \n     <div class=\"row\">\n       <div class=\"col-md-12 task-date\">\n       ").concat(item.date, "\n       </div>\n     </div>\n     </div>");
                 // const li = document.createElement('li');
                 // li.textContent = item.task;
                 // li.setAttribute('id',item.id.toString());

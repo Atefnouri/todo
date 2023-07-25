@@ -154,16 +154,18 @@ class TodoList {
      <span class="completed-task"> ${item.task}</span>
      <button 
      type="button"
+     alt="delete item"
      id="del"
      class="btn btn-outline-danger btn-sm action-button">
-     Delete
+     <i class="fa-solid fa-trash"></i>
     </button> 
-
+ 
     <button 
     type="button"
     id="undo"
+    alt="restore item"
     class="btn btn-outline-light btn-sm action-button">
-    restore
+    <i class="fa-solid fa-rotate-left"></i>
    </button> 
    
      <div class="row">
