@@ -168,7 +168,7 @@ class TodoList {
    
      <div class="row">
        <div class="col-md-12 task-date">
-         07-07-2023
+       ${item.date}
        </div>
      </div>
      </div>`; 
@@ -427,10 +427,15 @@ localStorage.setItem("CompletedTodosArray", elementsString);
       this.result = '';
       //console.log(`this a ${message}`);
 
+      let _date = new Date();
+      let FormatDate:string = '';
+      FormatDate = _date.toLocaleDateString('en-GB'); 
+
       this.todosArray.push({
               id: this.todosArray.length + 1,
               task: message,
               completed: false,
+              date: FormatDate
             });
 
 
@@ -478,7 +483,7 @@ localStorage.setItem("CompletedTodosArray", elementsString);
           <span class="task-dot"></span><span>  ${el.task}</span> 
           <div class="row">
             <div class="col-md-12 task-date">
-              07-07-2023
+            ${el.date}
             </div>
           </div>
           </div>`;
