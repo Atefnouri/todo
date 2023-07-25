@@ -19,7 +19,7 @@ var TodoList = /** @class */ (function () {
             }
             var completeItem = "";
             _this.CompletedTodosArray.forEach(function (item) {
-                completeItem = "<div class=\"col-md-12 complete-task-item\" id=\"".concat(item.id, "\">\n     <span class=\"complete-task-dot\"></span>\n     <span class=\"completed-task\"> ").concat(item.task, "</span>\n     <button \n     type=\"button\"\n     id=\"del\"\n     class=\"btn btn-outline-danger btn-sm action-button\">\n     Delete\n    </button> \n\n    <button \n    type=\"button\"\n    id=\"").concat(item.id, "\"\n    class=\"btn btn-outline-light btn-sm action-button\">\n    restore\n   </button> \n   \n     <div class=\"row\">\n       <div class=\"col-md-12 task-date\">\n         07-07-2023\n       </div>\n     </div>\n     </div>");
+                completeItem = "<div class=\"col-md-12 complete-task-item\" id=\"".concat(item.id, "\">\n     <span class=\"complete-task-dot\"></span>\n     <span class=\"completed-task\"> ").concat(item.task, "</span>\n     <button \n     type=\"button\"\n     id=\"del\"\n     class=\"btn btn-outline-danger btn-sm action-button\">\n     Delete\n    </button> \n\n    <button \n    type=\"button\"\n    id=\"undo\"\n    class=\"btn btn-outline-light btn-sm action-button\">\n    restore\n   </button> \n   \n     <div class=\"row\">\n       <div class=\"col-md-12 task-date\">\n         07-07-2023\n       </div>\n     </div>\n     </div>");
                 // const li = document.createElement('li');
                 // li.textContent = item.task;
                 // li.setAttribute('id',item.id.toString());
@@ -67,13 +67,13 @@ var TodoList = /** @class */ (function () {
         };
         //undo button event handler
         this.undoButtonEventHandler = function () {
-            var listItems = document.querySelectorAll("#completedList li");
-            listItems.forEach(function (li) {
-                var undoButton = li.querySelector("#undo");
-                var liId = li.id;
+            var listItems = document.querySelectorAll('div.complete-task-item');
+            listItems.forEach(function (item) {
+                var undoButton = item.querySelector("#undo");
+                var itemId = item.id;
                 if (undoButton) {
                     undoButton.addEventListener("click", function () {
-                        _this.undoButtonHandler(liId);
+                        _this.undoButtonHandler(itemId);
                     });
                 }
             });

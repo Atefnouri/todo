@@ -161,7 +161,7 @@ class TodoList {
 
     <button 
     type="button"
-    id="${item.id}"
+    id="undo"
     class="btn btn-outline-light btn-sm action-button">
     restore
    </button> 
@@ -217,6 +217,7 @@ class TodoList {
 
   //delete button event handler
    addClickEventsToButtons = () => {
+
     const listItems = document.querySelectorAll('div.complete-task-item');
     listItems.forEach((item) => {
       const deleteButton = item.querySelector<HTMLButtonElement>("#del");
@@ -235,15 +236,15 @@ class TodoList {
 
   //undo button event handler
   undoButtonEventHandler= () => {
-    const listItems = document.querySelectorAll<HTMLLIElement>("#completedList li");
-  
-    listItems.forEach((li) => {
-      const undoButton = li.querySelector<HTMLButtonElement>("#undo");
-      const liId = li.id;
+
+    const listItems = document.querySelectorAll('div.complete-task-item');
+    listItems.forEach((item) => {
+      const undoButton = item.querySelector<HTMLButtonElement>("#undo");
+      const itemId = item.id;
   
       if (undoButton) {
         undoButton.addEventListener("click", () => {
-          this.undoButtonHandler(liId);
+          this.undoButtonHandler(itemId);
         });
       }
     });
