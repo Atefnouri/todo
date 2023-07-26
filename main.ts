@@ -26,7 +26,27 @@ class TodoList {
       this.localStorageHandler();
       this.disPlayHandlerTrigger();
       this.completedDisplayHandler();
+      this.clearLocalStorage();
     }
+
+
+
+    clearLocalStorage  = () => {
+
+      let clearButton = document.getElementById("clear") as HTMLElement;
+clearButton.addEventListener("click", () => {
+  const confirmation = window.confirm("Are you sure you want to clear your local storage");
+  if (confirmation) {
+    // Get the localStorage object.
+const localStorage = window.localStorage;
+
+// Clear the localStorage object.
+localStorage.clear();
+
+  }  
+});
+
+}
 
 
      localStorageHandler() {
@@ -503,7 +523,7 @@ localStorage.setItem("CompletedTodosArray", elementsString);
           <span class="task-dot"></span><span>  ${el.task}</span> 
           <button 
           type="button"
-          id="undo"
+          id="edit"
           alt="restore item"
           class="btn btn-outline-light btn-sm action-button">
           <i class="fa-solid fa-pen"></i>
@@ -542,6 +562,11 @@ localStorage.setItem("CompletedTodosArray", elementsString);
 
 
 
+    public static clearStorages = () =>{
+
+      console.log('test clearStorages');
+
+    }
 
 
 

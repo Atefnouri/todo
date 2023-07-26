@@ -3,6 +3,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var TodoList = /** @class */ (function () {
     function TodoList() {
         var _this = this;
+        this.clearLocalStorage = function () {
+            var clearButton = document.getElementById("clear");
+            clearButton.addEventListener("click", function () {
+                var confirmation = window.confirm("Are you sure you want to clear your local storage");
+                if (confirmation) {
+                    // Get the localStorage object.
+                    var localStorage_1 = window.localStorage;
+                    // Clear the localStorage object.
+                    localStorage_1.clear();
+                }
+            });
+        };
         // Displays the completed Todo items in a separate area.
         this.completedDisplayHandler = function () {
             _this.updateLocalStorageCompleteArray();
@@ -246,7 +258,7 @@ var TodoList = /** @class */ (function () {
             console.log('disPlayHandlerTrigger');
             var item = "";
             _this.todosArray.forEach(function (el) {
-                item = "  <div class=\"col-md-12 task-item\" id=\"".concat(el.id, "\">\n          <span class=\"task-dot\"></span><span>  ").concat(el.task, "</span> \n          <button \n          type=\"button\"\n          id=\"undo\"\n          alt=\"restore item\"\n          class=\"btn btn-outline-light btn-sm action-button\">\n          <i class=\"fa-solid fa-pen\"></i>\n         </button> \n\n        <!--- check button  --->\n         <button \n         type=\"button\"\n         id=\"check\"\n         alt=\"restore item\"\n         class=\"btn btn-outline-light btn-sm action-button\">\n         <i class=\"fa-solid fa-circle-check\"></i>\n        </button> \n\n         \n          <div class=\"row\">\n            <div class=\"col-md-12 task-date\">\n            ").concat(el.date, "\n            </div>\n          </div>\n          </div>");
+                item = "  <div class=\"col-md-12 task-item\" id=\"".concat(el.id, "\">\n          <span class=\"task-dot\"></span><span>  ").concat(el.task, "</span> \n          <button \n          type=\"button\"\n          id=\"edit\"\n          alt=\"restore item\"\n          class=\"btn btn-outline-light btn-sm action-button\">\n          <i class=\"fa-solid fa-pen\"></i>\n         </button> \n\n        <!--- check button  --->\n         <button \n         type=\"button\"\n         id=\"check\"\n         alt=\"restore item\"\n         class=\"btn btn-outline-light btn-sm action-button\">\n         <i class=\"fa-solid fa-circle-check\"></i>\n        </button> \n\n         \n          <div class=\"row\">\n            <div class=\"col-md-12 task-date\">\n            ").concat(el.date, "\n            </div>\n          </div>\n          </div>");
                 //} 
                 _this.result += (item);
             });
@@ -270,6 +282,7 @@ var TodoList = /** @class */ (function () {
         this.localStorageHandler();
         this.disPlayHandlerTrigger();
         this.completedDisplayHandler();
+        this.clearLocalStorage();
     }
     TodoList.prototype.localStorageHandler = function () {
         // Retrieve the string from local storage
@@ -356,6 +369,9 @@ var TodoList = /** @class */ (function () {
         var elementsString = JSON.stringify(this.CompletedTodosArray);
         // Save the string in local storage
         localStorage.setItem("CompletedTodosArray", elementsString);
+    };
+    TodoList.clearStorages = function () {
+        console.log('test clearStorages');
     };
     return TodoList;
 }());
