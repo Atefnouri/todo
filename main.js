@@ -102,6 +102,18 @@ var TodoList = /** @class */ (function () {
         };
         //add eventlistener to the main task list
         this.addEventHandler = function () {
+            var listItems = document.querySelectorAll('div.task-item');
+            listItems.forEach(function (item) {
+                var checkButton = item.querySelector("#check");
+                var itemId = item.id;
+                if (checkButton) {
+                    checkButton.addEventListener("click", function () {
+                        console.log("Clicked on item ".concat(itemId));
+                        _this.handleClickOnItem(Number(itemId));
+                    });
+                }
+            });
+            return;
             var myList = document.getElementById("listdiv");
             //const liElements = myList?.getElementsByTagName("li");
             var divArray = myList === null || myList === void 0 ? void 0 : myList.querySelectorAll('div.task-item');
@@ -234,7 +246,7 @@ var TodoList = /** @class */ (function () {
             console.log('disPlayHandlerTrigger');
             var item = "";
             _this.todosArray.forEach(function (el) {
-                item = "  <div class=\"col-md-12 task-item\" id=\"".concat(el.id, "\">\n          <span class=\"task-dot\"></span><span>  ").concat(el.task, "</span> \n          <div class=\"row\">\n            <div class=\"col-md-12 task-date\">\n            ").concat(el.date, "\n            </div>\n          </div>\n          </div>");
+                item = "  <div class=\"col-md-12 task-item\" id=\"".concat(el.id, "\">\n          <span class=\"task-dot\"></span><span>  ").concat(el.task, "</span> \n          <button \n          type=\"button\"\n          id=\"undo\"\n          alt=\"restore item\"\n          class=\"btn btn-outline-light btn-sm action-button\">\n          <i class=\"fa-solid fa-pen\"></i>\n         </button> \n\n        <!--- check button  --->\n         <button \n         type=\"button\"\n         id=\"check\"\n         alt=\"restore item\"\n         class=\"btn btn-outline-light btn-sm action-button\">\n         <i class=\"fa-solid fa-circle-check\"></i>\n        </button> \n\n         \n          <div class=\"row\">\n            <div class=\"col-md-12 task-date\">\n            ").concat(el.date, "\n            </div>\n          </div>\n          </div>");
                 //} 
                 _this.result += (item);
             });

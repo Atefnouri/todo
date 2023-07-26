@@ -286,6 +286,22 @@ class TodoList {
 
 //add eventlistener to the main task list
   addEventHandler = () => {
+   
+    const listItems = document.querySelectorAll('div.task-item');
+    listItems.forEach((item) => {
+      const checkButton = item.querySelector<HTMLButtonElement>("#check");
+      const itemId = item.id;
+  
+      if (checkButton) {
+        checkButton.addEventListener("click", () => {
+          console.log(`Clicked on item ${itemId}`);
+          this.handleClickOnItem(Number(itemId));
+        });
+      }
+    });
+
+
+    return;
     const myList = document.getElementById("listdiv");
     //const liElements = myList?.getElementsByTagName("li");
     const divArray = myList?.querySelectorAll('div.task-item');
@@ -301,6 +317,8 @@ class TodoList {
         });
       }
     }
+
+
   }
   
 
@@ -483,6 +501,24 @@ localStorage.setItem("CompletedTodosArray", elementsString);
       
           item = `  <div class="col-md-12 task-item" id="${el.id}">
           <span class="task-dot"></span><span>  ${el.task}</span> 
+          <button 
+          type="button"
+          id="undo"
+          alt="restore item"
+          class="btn btn-outline-light btn-sm action-button">
+          <i class="fa-solid fa-pen"></i>
+         </button> 
+
+        <!--- check button  --->
+         <button 
+         type="button"
+         id="check"
+         alt="restore item"
+         class="btn btn-outline-light btn-sm action-button">
+         <i class="fa-solid fa-circle-check"></i>
+        </button> 
+
+         
           <div class="row">
             <div class="col-md-12 task-date">
             ${el.date}
