@@ -320,9 +320,7 @@ localStorage.clear();
       }
     });
 
-
-    return;
-    const myList = document.getElementById("listdiv");
+    /*const myList = document.getElementById("listdiv");
     //const liElements = myList?.getElementsByTagName("li");
     const divArray = myList?.querySelectorAll('div.task-item');
   
@@ -336,7 +334,7 @@ localStorage.clear();
           this.handleClickOnItem(Number(id));
         });
       }
-    }
+    }*/
 
 
   }
@@ -407,6 +405,22 @@ localStorage.clear();
 
   //add event listeners to the edit button
   editButtonEventListener = () => {
+
+    const listItems = document.querySelectorAll('div.task-item');
+    listItems.forEach((item) => {
+      const checkButton = item.querySelector<HTMLButtonElement>("#edit");
+      const itemId = item.id;
+  
+      if (checkButton) {
+        checkButton.addEventListener("click", () => {
+          console.log(`Clicked on item to edit ${itemId}`);
+          //this.handleClickOnItem(Number(itemId));
+        });
+      }
+    });
+
+
+   return;
     const myList = document.getElementById("listdiv");
     const buttonArray = myList?.getElementsByTagName("button");
   
@@ -422,6 +436,7 @@ localStorage.clear();
         });
       }
     }
+
   }
   
 
@@ -521,6 +536,7 @@ localStorage.setItem("CompletedTodosArray", elementsString);
       
           item = `  <div class="col-md-12 task-item" id="${el.id}">
           <span class="task-dot"></span><span>  ${el.task}</span> 
+         
           <button 
           type="button"
           id="edit"
@@ -544,7 +560,12 @@ localStorage.setItem("CompletedTodosArray", elementsString);
             ${el.date}
             </div>
           </div>
-          </div>`;
+          </div>
+          <div class="col-md-12 under-task-item">
+          <input type="text" class="form-control"  id="${el.id}">
+          </div>
+          
+          `;
         //} 
       
         this.result += (item);

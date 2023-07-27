@@ -125,29 +125,27 @@ var TodoList = /** @class */ (function () {
                     });
                 }
             });
-            return;
-            var myList = document.getElementById("listdiv");
+            /*const myList = document.getElementById("listdiv");
             //const liElements = myList?.getElementsByTagName("li");
-            var divArray = myList === null || myList === void 0 ? void 0 : myList.querySelectorAll('div.task-item');
+            const divArray = myList?.querySelectorAll('div.task-item');
+          
             if (divArray) {
-                var _loop_1 = function (i) {
-                    var item = divArray[i];
-                    var id = item.getAttribute("id");
-                    item.addEventListener("click", function () {
-                        console.log("Clicked on item ".concat(id));
-                        _this.handleClickOnItem(Number(id));
-                    });
-                };
-                for (var i = 0; i < divArray.length; i++) {
-                    _loop_1(i);
-                }
-            }
+              for (let i = 0; i < divArray.length; i++) {
+                const item = divArray[i];
+                const id = item.getAttribute("id");
+          
+                item.addEventListener("click", () => {
+                  console.log(`Clicked on item ${id}`);
+                  this.handleClickOnItem(Number(id));
+                });
+              }
+            }*/
         };
         this.addEnterKeyOnEditField = function () {
             var myList = document.getElementById("listdiv");
             var inputArray = myList === null || myList === void 0 ? void 0 : myList.getElementsByTagName("input");
             if (inputArray) {
-                var _loop_2 = function (i) {
+                var _loop_1 = function (i) {
                     var field = inputArray[i];
                     var id = field.getAttribute("id");
                     field.addEventListener("click", function () {
@@ -157,7 +155,7 @@ var TodoList = /** @class */ (function () {
                     });
                 };
                 for (var i = 0; i < inputArray.length; i++) {
-                    _loop_2(i);
+                    _loop_1(i);
                 }
             }
         };
@@ -188,10 +186,22 @@ var TodoList = /** @class */ (function () {
         };
         //add event listeners to the edit button
         this.editButtonEventListener = function () {
+            var listItems = document.querySelectorAll('div.task-item');
+            listItems.forEach(function (item) {
+                var checkButton = item.querySelector("#edit");
+                var itemId = item.id;
+                if (checkButton) {
+                    checkButton.addEventListener("click", function () {
+                        console.log("Clicked on item to edit ".concat(itemId));
+                        //this.handleClickOnItem(Number(itemId));
+                    });
+                }
+            });
+            return;
             var myList = document.getElementById("listdiv");
             var buttonArray = myList === null || myList === void 0 ? void 0 : myList.getElementsByTagName("button");
             if (buttonArray) {
-                var _loop_3 = function (i) {
+                var _loop_2 = function (i) {
                     var bt = buttonArray[i];
                     var id = bt.getAttribute("id");
                     bt.addEventListener("click", function () {
@@ -201,7 +211,7 @@ var TodoList = /** @class */ (function () {
                     });
                 };
                 for (var i = 0; i < buttonArray.length; i++) {
-                    _loop_3(i);
+                    _loop_2(i);
                 }
             }
         };
@@ -258,7 +268,7 @@ var TodoList = /** @class */ (function () {
             console.log('disPlayHandlerTrigger');
             var item = "";
             _this.todosArray.forEach(function (el) {
-                item = "  <div class=\"col-md-12 task-item\" id=\"".concat(el.id, "\">\n          <span class=\"task-dot\"></span><span>  ").concat(el.task, "</span> \n          <button \n          type=\"button\"\n          id=\"edit\"\n          alt=\"restore item\"\n          class=\"btn btn-outline-light btn-sm action-button\">\n          <i class=\"fa-solid fa-pen\"></i>\n         </button> \n\n        <!--- check button  --->\n         <button \n         type=\"button\"\n         id=\"check\"\n         alt=\"restore item\"\n         class=\"btn btn-outline-light btn-sm action-button\">\n         <i class=\"fa-solid fa-circle-check\"></i>\n        </button> \n\n         \n          <div class=\"row\">\n            <div class=\"col-md-12 task-date\">\n            ").concat(el.date, "\n            </div>\n          </div>\n          </div>");
+                item = "  <div class=\"col-md-12 task-item\" id=\"".concat(el.id, "\">\n          <span class=\"task-dot\"></span><span>  ").concat(el.task, "</span> \n         \n          <button \n          type=\"button\"\n          id=\"edit\"\n          alt=\"restore item\"\n          class=\"btn btn-outline-light btn-sm action-button\">\n          <i class=\"fa-solid fa-pen\"></i>\n         </button> \n\n        <!--- check button  --->\n         <button \n         type=\"button\"\n         id=\"check\"\n         alt=\"restore item\"\n         class=\"btn btn-outline-light btn-sm action-button\">\n         <i class=\"fa-solid fa-circle-check\"></i>\n        </button> \n\n         \n          <div class=\"row\">\n            <div class=\"col-md-12 task-date\">\n            ").concat(el.date, "\n            </div>\n          </div>\n          </div>\n          <div class=\"col-md-12 under-task-item\">\n          <input type=\"text\" class=\"form-control\"  id=\"").concat(el.id, "\">\n          </div>\n          \n          ");
                 //} 
                 _this.result += (item);
             });

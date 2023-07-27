@@ -68,6 +68,15 @@ margin-right: 5px;
   border-bottom: 1px solid #272732;
   padding-left: 15px;
 }
+
+.under-task-item input{
+  background-color: #383842;
+  color: #fff;
+  height: 50px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
 .task-item:hover{
   background-color: #484851 ;
   /*cursor: pointer;*/
