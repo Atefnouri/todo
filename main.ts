@@ -380,8 +380,17 @@ localStorage.clear();
 //show edit field and addevet ok key enter evenr listener
   showEditFiedl = (id:string) => {
     console.log(`show filter: ${id}`);
-    const myList = document.getElementById("listdiv");
+      const myList = document.getElementById("listdiv");
     const textField = myList?.querySelector<HTMLInputElement>('#text'+id);
+    console.log(document.getElementById(id));
+    const myTextField = document.getElementById('edit_'+id);
+    if(myTextField){
+      myTextField.removeAttribute("hidden");
+
+    }
+
+    return;
+
     // const editButton = myList?.querySelector<HTMLButtonElement>('#'+id);
     // if (editButton) {
     //   editButton.textContent = "confim";
@@ -415,6 +424,7 @@ localStorage.clear();
         checkButton.addEventListener("click", () => {
           console.log(`Clicked on item to edit ${itemId}`);
           //this.handleClickOnItem(Number(itemId));
+          this.showEditFiedl(itemId);
         });
       }
     });
@@ -562,7 +572,7 @@ localStorage.setItem("CompletedTodosArray", elementsString);
           </div>
           </div>
           <div class="col-md-12 under-task-item">
-          <input type="text" class="form-control"  id="${el.id}">
+          <input type="text" class="form-control" hidden id="edit_${el.id}">
           </div>
           
           `;
