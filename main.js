@@ -12,6 +12,7 @@ var TodoList = /** @class */ (function () {
                     var localStorage_1 = window.localStorage;
                     // Clear the localStorage object.
                     localStorage_1.clear();
+                    location.reload();
                 }
             });
         };
@@ -167,25 +168,19 @@ var TodoList = /** @class */ (function () {
         //show edit field and addevet ok key enter evenr listener
         this.showEditFiedl = function (id) {
             console.log("show filter: ".concat(id));
-            var myList = document.getElementById("listdiv");
-            var textField = myList === null || myList === void 0 ? void 0 : myList.querySelector('#text' + id);
             console.log(document.getElementById(id));
             var myTextField = document.getElementById('edit_' + id);
             if (myTextField) {
                 myTextField.removeAttribute("hidden");
-            }
-            return;
-            // const editButton = myList?.querySelector<HTMLButtonElement>('#'+id);
-            // if (editButton) {
-            //   editButton.textContent = "confim";
-            // }
-            console.log(textField);
-            if (textField) {
-                textField.hidden = false;
-                textField.addEventListener("keypress", function (event) {
+                //autofocus and set the curssor
+                myTextField.focus();
+                var inputValueLength = myTextField.value.length;
+                myTextField.setSelectionRange(inputValueLength, inputValueLength);
+                myTextField.addEventListener("keypress", function (event) {
                     if (event.key === "Enter") {
-                        _this.updateTaskList(id, textField.value);
-                        textField.hidden = true;
+                        _this.updateTaskList(id, myTextField.value);
+                        //console.log('new value' , (myTextField as HTMLInputElement).value);
+                        myTextField.hidden = true;
                     }
                 });
             }
@@ -275,7 +270,7 @@ var TodoList = /** @class */ (function () {
             console.log('disPlayHandlerTrigger');
             var item = "";
             _this.todosArray.forEach(function (el) {
-                item = "  <div class=\"col-md-12 task-item\" id=\"".concat(el.id, "\">\n          <span class=\"task-dot\"></span><span>  ").concat(el.task, "</span> \n         \n          <button \n          type=\"button\"\n          id=\"edit\"\n          alt=\"restore item\"\n          class=\"btn btn-outline-light btn-sm action-button\">\n          <i class=\"fa-solid fa-pen\"></i>\n         </button> \n\n        <!--- check button  --->\n         <button \n         type=\"button\"\n         id=\"check\"\n         alt=\"restore item\"\n         class=\"btn btn-outline-light btn-sm action-button\">\n         <i class=\"fa-solid fa-circle-check\"></i>\n        </button> \n\n         \n          <div class=\"row\">\n            <div class=\"col-md-12 task-date\">\n            ").concat(el.date, "\n            </div>\n          </div>\n          </div>\n          <div class=\"col-md-12 under-task-item\">\n          <input type=\"text\" class=\"form-control\" hidden id=\"edit_").concat(el.id, "\">\n          </div>\n          \n          ");
+                item = "  <div class=\"col-md-12 task-item\" id=\"".concat(el.id, "\">\n          <span class=\"task-dot\"></span><span>  ").concat(el.task, "</span> \n         \n          <button \n          type=\"button\"\n          id=\"edit\"\n          alt=\"restore item\"\n          class=\"btn btn-outline-light btn-sm action-button\">\n          <i class=\"fa-solid fa-pen\"></i>\n         </button> \n\n        <!--- check button  --->\n         <button \n         type=\"button\"\n         id=\"check\"\n         alt=\"restore item\"\n         class=\"btn btn-outline-light btn-sm action-button\">\n         <i class=\"fa-solid fa-circle-check\"></i>\n        </button> \n\n         \n          <div class=\"row\">\n            <div class=\"col-md-12 task-date\">\n            ").concat(el.date, "\n            </div>\n          </div>\n          </div>\n          <div class=\"col-md-12 under-task-item\">\n          <input type=\"text\" class=\"form-control\" value=\"").concat(el.task, "\" hidden  id=\"edit_").concat(el.id, "\">\n          </div>\n          \n          ");
                 //} 
                 _this.result += (item);
             });
@@ -386,9 +381,6 @@ var TodoList = /** @class */ (function () {
         var elementsString = JSON.stringify(this.CompletedTodosArray);
         // Save the string in local storage
         localStorage.setItem("CompletedTodosArray", elementsString);
-    };
-    TodoList.clearStorages = function () {
-        console.log('test clearStorages');
     };
     return TodoList;
 }());

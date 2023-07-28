@@ -38,10 +38,10 @@ clearButton.addEventListener("click", () => {
   const confirmation = window.confirm("Are you sure you want to clear your local storage");
   if (confirmation) {
     // Get the localStorage object.
-const localStorage = window.localStorage;
-
+    const localStorage = window.localStorage;
 // Clear the localStorage object.
 localStorage.clear();
+location.reload();
 
   }  
 });
@@ -380,32 +380,27 @@ localStorage.clear();
 //show edit field and addevet ok key enter evenr listener
   showEditFiedl = (id:string) => {
     console.log(`show filter: ${id}`);
-      const myList = document.getElementById("listdiv");
-    const textField = myList?.querySelector<HTMLInputElement>('#text'+id);
+   
     console.log(document.getElementById(id));
     const myTextField = document.getElementById('edit_'+id);
     if(myTextField){
       myTextField.removeAttribute("hidden");
 
-    }
+      //autofocus and set the curssor
+      myTextField.focus();
+      const inputValueLength = (myTextField as HTMLInputElement).value.length;
+      (myTextField as HTMLInputElement).setSelectionRange(inputValueLength, inputValueLength);
 
-    return;
-
-    // const editButton = myList?.querySelector<HTMLButtonElement>('#'+id);
-    // if (editButton) {
-    //   editButton.textContent = "confim";
-    // }
-    console.log(textField);
-    if (textField) {
-      textField.hidden = false;
-      textField.addEventListener("keypress", (event) => {
+      myTextField.addEventListener("keypress", (event) => {
         if (event.key === "Enter") {
   
-          this.updateTaskList(id,textField.value);
-          textField.hidden = true;
+          this.updateTaskList(id, (myTextField as HTMLInputElement).value);
+          //console.log('new value' , (myTextField as HTMLInputElement).value);
+          myTextField.hidden = true;
           
         }
       });
+
     }
 
    }
@@ -572,7 +567,7 @@ localStorage.setItem("CompletedTodosArray", elementsString);
           </div>
           </div>
           <div class="col-md-12 under-task-item">
-          <input type="text" class="form-control" hidden id="edit_${el.id}">
+          <input type="text" class="form-control" value="${el.task}" hidden  id="edit_${el.id}">
           </div>
           
           `;
@@ -593,11 +588,7 @@ localStorage.setItem("CompletedTodosArray", elementsString);
 
 
 
-    public static clearStorages = () =>{
 
-      console.log('test clearStorages');
-
-    }
 
 
 
