@@ -1,5 +1,4 @@
-import { Todo } from './ITodo';
-
+import { Todo } from './src/ITodo';
 class TodoList {
  
     public todosArray: Todo[];
@@ -27,6 +26,7 @@ class TodoList {
       this.disPlayHandlerTrigger();
       this.completedDisplayHandler();
       this.clearLocalStorage();
+  
     }
 
 
@@ -567,7 +567,7 @@ localStorage.setItem("CompletedTodosArray", elementsString);
           </div>
           </div>
           <div class="col-md-12 under-task-item">
-          <input type="text" class="form-control" value="${el.task}" hidden  id="edit_${el.id}">
+          <input type="text" value="${el.task}" hidden  id="edit_${el.id}">
           </div>
           
           `;
