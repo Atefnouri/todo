@@ -499,7 +499,6 @@ localStorage.setItem("CompletedTodosArray", elementsString);
 
 
 
-
     //Displays the Todo items in the main list area.
     disPlayHandlerTrigger = () => {
 
@@ -520,7 +519,7 @@ localStorage.setItem("CompletedTodosArray", elementsString);
           } 
 
      
-      
+          this.handleDate();
 
       console.log('🔥 todosArray 🔥');
       console.table(this.todosArray); 
@@ -573,11 +572,40 @@ localStorage.setItem("CompletedTodosArray", elementsString);
 
     this.addEventHandler();
     this.editButtonEventListener();
+ 
     //this.addStyleChange();
     }
 
+    handleDate = () => {
 
 
+      console.log('date format started');
+
+      const todayRefrence = new Date().toLocaleDateString('en-GB');
+
+      const _yesterday = new Date();
+      _yesterday.setDate(_yesterday.getDate() - 1);
+      const yesterdayRefernce = _yesterday.toLocaleDateString('en-GB');
+     
+       //const finalToday = new Date(todayRefrence)
+       //const finalYesterday = new Date(yesterdayRefernce).getTime();
+
+        this.todosArray.forEach(el => {
+
+
+          console.log(todayRefrence,yesterdayRefernce);
+
+          //let arrayDate = new Date(el.date);
+          if(el.date === todayRefrence){
+            console.log('Today is correct ');
+            el.date = 'Today';
+          } else if( el.date === yesterdayRefernce){ 
+            el.date = 'Yesterday';
+            console.log('Yesterday is correct ');
+          }
+        });
+      
+    }
 
 
 

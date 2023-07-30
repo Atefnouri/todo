@@ -255,6 +255,7 @@ var TodoList = /** @class */ (function () {
             if (counterArea) {
                 counterArea.innerHTML = _this.todosArray.length.toString();
             }
+            _this.handleDate();
             console.log('🔥 todosArray 🔥');
             console.table(_this.todosArray);
             console.log('disPlayHandlerTrigger');
@@ -271,6 +272,27 @@ var TodoList = /** @class */ (function () {
             _this.addEventHandler();
             _this.editButtonEventListener();
             //this.addStyleChange();
+        };
+        this.handleDate = function () {
+            console.log('date format started');
+            var todayRefrence = new Date().toLocaleDateString('en-GB');
+            var _yesterday = new Date();
+            _yesterday.setDate(_yesterday.getDate() - 1);
+            var yesterdayRefernce = _yesterday.toLocaleDateString('en-GB');
+            //const finalToday = new Date(todayRefrence)
+            //const finalYesterday = new Date(yesterdayRefernce).getTime();
+            _this.todosArray.forEach(function (el) {
+                console.log(todayRefrence, yesterdayRefernce);
+                //let arrayDate = new Date(el.date);
+                if (el.date === todayRefrence) {
+                    console.log('Today is correct ');
+                    el.date = 'Today';
+                }
+                else if (el.date === yesterdayRefernce) {
+                    el.date = 'Yesterday';
+                    console.log('Yesterday is correct ');
+                }
+            });
         };
         //initialasting
         this.emptyMsg = document.getElementById("emptymsg");
