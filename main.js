@@ -142,24 +142,6 @@ var TodoList = /** @class */ (function () {
               }
             }*/
         };
-        this.addEnterKeyOnEditField = function () {
-            var myList = document.getElementById("listdiv");
-            var inputArray = myList === null || myList === void 0 ? void 0 : myList.getElementsByTagName("input");
-            if (inputArray) {
-                var _loop_1 = function (i) {
-                    var field = inputArray[i];
-                    var id = field.getAttribute("id");
-                    field.addEventListener("click", function () {
-                        console.log("Clicked on item ".concat(id));
-                        //this.showEditFiedl(id);
-                        //this.handleClickOnItem(Number(id));
-                    });
-                };
-                for (var i = 0; i < inputArray.length; i++) {
-                    _loop_1(i);
-                }
-            }
-        };
         this.updateTaskList = function (id, newText) {
             var selecteTaskIndex = _this.findObjectById(Number(id));
             _this.todosArray[selecteTaskIndex].task = newText;
@@ -169,20 +151,28 @@ var TodoList = /** @class */ (function () {
         this.showEditFiedl = function (id) {
             console.log("show filter: ".concat(id));
             console.log(document.getElementById(id));
-            var myTextField = document.getElementById('edit_' + id);
-            if (myTextField) {
-                myTextField.removeAttribute("hidden");
-                //autofocus and set the curssor
-                myTextField.focus();
-                var inputValueLength = myTextField.value.length;
-                myTextField.setSelectionRange(inputValueLength, inputValueLength);
-                myTextField.addEventListener("keypress", function (event) {
+            var editField = document.getElementById('edit_' + id);
+            //test visibility of edit field
+            var isHidden = editField.style.display === "none";
+            if (isHidden) {
+                // The input field is hidden
+                console.log('visible');
+                editField.style.display = "inline";
+                editField.focus();
+                var inputValueLength = editField.value.length;
+                editField.setSelectionRange(inputValueLength, inputValueLength);
+                editField.addEventListener("keypress", function (event) {
                     if (event.key === "Enter") {
-                        _this.updateTaskList(id, myTextField.value);
+                        _this.updateTaskList(id, editField.value);
                         //console.log('new value' , (myTextField as HTMLInputElement).value);
-                        myTextField.hidden = true;
+                        editField.hidden = true;
                     }
                 });
+            }
+            else {
+                // The input field is not hidden
+                console.log('hiddne');
+                editField.style.display = "none";
             }
         };
         //add event listeners to the edit button
@@ -203,7 +193,7 @@ var TodoList = /** @class */ (function () {
             var myList = document.getElementById("listdiv");
             var buttonArray = myList === null || myList === void 0 ? void 0 : myList.getElementsByTagName("button");
             if (buttonArray) {
-                var _loop_2 = function (i) {
+                var _loop_1 = function (i) {
                     var bt = buttonArray[i];
                     var id = bt.getAttribute("id");
                     bt.addEventListener("click", function () {
@@ -213,7 +203,7 @@ var TodoList = /** @class */ (function () {
                     });
                 };
                 for (var i = 0; i < buttonArray.length; i++) {
-                    _loop_2(i);
+                    _loop_1(i);
                 }
             }
         };
@@ -270,7 +260,7 @@ var TodoList = /** @class */ (function () {
             console.log('disPlayHandlerTrigger');
             var item = "";
             _this.todosArray.forEach(function (el) {
-                item = "  <div class=\"col-md-12 task-item\" id=\"".concat(el.id, "\">\n          <span class=\"task-dot\"></span><span>  ").concat(el.task, "</span> \n         \n          <button \n          type=\"button\"\n          id=\"edit\"\n          alt=\"restore item\"\n          class=\"btn btn-outline-light btn-sm action-button\">\n          <i class=\"fa-solid fa-pen\"></i>\n         </button> \n\n        <!--- check button  --->\n         <button \n         type=\"button\"\n         id=\"check\"\n         alt=\"restore item\"\n         class=\"btn btn-outline-light btn-sm action-button\">\n         <i class=\"fa-solid fa-circle-check\"></i>\n        </button> \n\n         \n          <div class=\"row\">\n            <div class=\"col-md-12 task-date\">\n            ").concat(el.date, "\n            </div>\n          </div>\n          </div>\n          <div class=\"col-md-12 under-task-item\">\n          <input type=\"text\" value=\"").concat(el.task, "\" hidden  id=\"edit_").concat(el.id, "\">\n          </div>\n          \n          ");
+                item = "  <div class=\"col-md-12 task-item\" id=\"".concat(el.id, "\">\n          <span class=\"task-dot\"></span><span>  ").concat(el.task, "</span> \n         \n          <button \n          type=\"button\"\n          id=\"edit\"\n          alt=\"restore item\"\n          class=\"btn btn-outline-light btn-sm action-button\">\n          <i class=\"fa-solid fa-pen\"></i>\n         </button> \n\n        <!--- check button  --->\n         <button \n         type=\"button\"\n         id=\"check\"\n         alt=\"restore item\"\n         class=\"btn btn-outline-light btn-sm action-button\">\n         <i class=\"fa-solid fa-circle-check\"></i>\n        </button> \n\n         \n          <div class=\"row\">\n            <div class=\"col-md-12 task-date\">\n            ").concat(el.date, "\n            </div>\n          </div>\n          </div>\n          <div class=\"col-md-12 under-task-item\">\n          <input type=\"text\" value=\"").concat(el.task, "\" style=\"display:none;\"  id=\"edit_").concat(el.id, "\">\n          </div>\n          \n          ");
                 //} 
                 _this.result += (item);
             });

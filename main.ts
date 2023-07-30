@@ -342,25 +342,6 @@ location.reload();
 
 
 
-  addEnterKeyOnEditField = () => {
-    const myList = document.getElementById("listdiv");
-    const inputArray = myList?.getElementsByTagName("input");
-  
-    if (inputArray) {
-      for (let i = 0; i < inputArray.length; i++) {
-        const field = inputArray[i];
-        const id = field.getAttribute("id");
-  
-        field.addEventListener("click", () => {
-          console.log(`Clicked on item ${id}`);
-          //this.showEditFiedl(id);
-          //this.handleClickOnItem(Number(id));
-        });
-      }
-    }
-
-   }
-
     findObjectById(id: number): any | undefined {
     
       const equalid = (element) => element.id === id;
@@ -382,27 +363,36 @@ location.reload();
     console.log(`show filter: ${id}`);
    
     console.log(document.getElementById(id));
-    const myTextField = document.getElementById('edit_'+id);
-    if(myTextField){
-      myTextField.removeAttribute("hidden");
+    const editField = document.getElementById('edit_'+id);
 
-      //autofocus and set the curssor
-      myTextField.focus();
-      const inputValueLength = (myTextField as HTMLInputElement).value.length;
-      (myTextField as HTMLInputElement).setSelectionRange(inputValueLength, inputValueLength);
+    //test visibility of edit field
 
-      myTextField.addEventListener("keypress", (event) => {
+    const isHidden = editField.style.display === "none";
+
+    if (isHidden) {
+      // The input field is hidden
+      console.log('visible');
+
+      editField.style.display = "inline";
+      editField.focus();
+      const inputValueLength = (editField as HTMLInputElement).value.length;
+      (editField as HTMLInputElement).setSelectionRange(inputValueLength, inputValueLength);
+
+      editField.addEventListener("keypress", (event) => {
         if (event.key === "Enter") {
   
-          this.updateTaskList(id, (myTextField as HTMLInputElement).value);
+          this.updateTaskList(id, (editField as HTMLInputElement).value);
           //console.log('new value' , (myTextField as HTMLInputElement).value);
-          myTextField.hidden = true;
+          editField.hidden = true;
           
         }
       });
 
+    } else {
+      // The input field is not hidden
+      console.log('hiddne');
+      editField.style.display = "none";
     }
-
    }
 
 
@@ -567,7 +557,7 @@ localStorage.setItem("CompletedTodosArray", elementsString);
           </div>
           </div>
           <div class="col-md-12 under-task-item">
-          <input type="text" value="${el.task}" hidden  id="edit_${el.id}">
+          <input type="text" value="${el.task}" style="display:none;"  id="edit_${el.id}">
           </div>
           
           `;
