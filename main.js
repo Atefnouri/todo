@@ -63,6 +63,7 @@ var TodoList = /** @class */ (function () {
             //add the event listeners
             _this.addClickEventsToButtons();
             _this.undoButtonEventHandler();
+            console.table(_this.CompletedTodosArray);
         };
         //delete button event handler
         this.addClickEventsToButtons = function () {
@@ -230,7 +231,7 @@ var TodoList = /** @class */ (function () {
             var FormatDate = '';
             FormatDate = _date.toLocaleDateString('en-GB');
             _this.todosArray.push({
-                id: _this.todosArray.length + 1,
+                id: (_this.todosArray.length + _this.CompletedTodosArray.length) + 1,
                 task: message,
                 completed: false,
                 date: FormatDate

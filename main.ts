@@ -29,6 +29,9 @@ class TodoList {
   
     }
 
+ 
+
+
 
 
     clearLocalStorage  = () => {
@@ -232,6 +235,7 @@ location.reload();
     //add the event listeners
     this.addClickEventsToButtons();
     this.undoButtonEventHandler();
+    console.table(this.CompletedTodosArray);
 
   }
   
@@ -482,7 +486,7 @@ localStorage.setItem("CompletedTodosArray", elementsString);
       FormatDate = _date.toLocaleDateString('en-GB'); 
 
       this.todosArray.push({
-              id: this.todosArray.length + 1,
+              id: (this.todosArray.length + this.CompletedTodosArray.length) + 1,
               task: message,
               completed: false,
               date: FormatDate
