@@ -93,12 +93,6 @@ location.reload();
     handleClickOnItem($id:number) {
       
       console.log(`clicked on item ${$id}`);
-      //return;
-      //toggle the checkbox
-      //let checkboxInstance = document.getElementById(`${$id}`) as HTMLInputElement;
-      //console.log(checkboxInstance);
-      //checkboxInstance.checked = !checkboxInstance.checked;
-
       let itemObject = (this.todosArray as Array<Todo>).find((el) => el.id === $id);
       if(itemObject){
      //filtet the check item from the todos arra
@@ -115,16 +109,6 @@ location.reload();
         console.log('item not found');
       }
 
-
-  //  if(itemObject) {
-  //     itemObject.completed = !itemObject.completed;
-  //   }
-  //  if(itemObject?.completed ){
-
-
-  //  }
-
-    //this.addStyleChange();
   }
 
 
@@ -198,28 +182,6 @@ location.reload();
      </div>
      </div>`; 
 
-
-      // const li = document.createElement('li');
-      // li.textContent = item.task;
-      // li.setAttribute('id',item.id.toString());
-      // li.style.color = 'gray';
-      // li.style.textDecoration = 'line-through';
-
-      // Create the button element
-      // const deleteButton = document.createElement("button");
-      // deleteButton.textContent = "Delete";
-      // deleteButton.setAttribute('id',"del");
-      //   // Add the button to the list item
-      //   li.appendChild(deleteButton);
-
-      //create the untdo button element  
-    //  const undoButton = document.createElement("button");
-    //   undoButton.textContent = "Undo";
-    //   undoButton.setAttribute('id',"undo");
-    //   li.appendChild(undoButton);
-
-      //add to the main area
-      // completedArea?.appendChild(li);
       this.completeResult += (completeItem);
     });
 
@@ -324,22 +286,6 @@ location.reload();
       }
     });
 
-    /*const myList = document.getElementById("listdiv");
-    //const liElements = myList?.getElementsByTagName("li");
-    const divArray = myList?.querySelectorAll('div.task-item');
-  
-    if (divArray) {
-      for (let i = 0; i < divArray.length; i++) {
-        const item = divArray[i];
-        const id = item.getAttribute("id");
-  
-        item.addEventListener("click", () => {
-          console.log(`Clicked on item ${id}`);
-          this.handleClickOnItem(Number(id));
-        });
-      }
-    }*/
-
 
   }
   
@@ -417,24 +363,6 @@ location.reload();
         });
       }
     });
-
-
-   return;
-    const myList = document.getElementById("listdiv");
-    const buttonArray = myList?.getElementsByTagName("button");
-  
-    if (buttonArray) {
-      for (let i = 0; i < buttonArray.length; i++) {
-        const bt = buttonArray[i];
-        const id = bt.getAttribute("id");
-  
-        bt.addEventListener("click", () => {
-          console.log(`Clicked on item ${id}`);
-          this.showEditFiedl(id);
-          //this.handleClickOnItem(Number(id));
-        });
-      }
-    }
 
   }
   
@@ -591,8 +519,6 @@ localStorage.setItem("CompletedTodosArray", elementsString);
       _yesterday.setDate(_yesterday.getDate() - 1);
       const yesterdayRefernce = _yesterday.toLocaleDateString('en-GB');
      
-       //const finalToday = new Date(todayRefrence)
-       //const finalYesterday = new Date(yesterdayRefernce).getTime();
 
         this.todosArray.forEach(el => {
 

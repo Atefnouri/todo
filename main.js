@@ -33,24 +33,6 @@ var TodoList = /** @class */ (function () {
             var completeItem = "";
             _this.CompletedTodosArray.forEach(function (item) {
                 completeItem = "<div class=\"col-md-12 complete-task-item\" id=\"".concat(item.id, "\">\n     <span class=\"complete-task-dot\"></span>\n     <span class=\"completed-task\"> ").concat(item.task, "</span>\n     <button \n     type=\"button\"\n     alt=\"delete item\"\n     id=\"del\"\n     class=\"btn btn-outline-danger btn-sm action-button\">\n     <i class=\"fa-solid fa-trash\"></i>\n    </button> \n \n    <button \n    type=\"button\"\n    id=\"undo\"\n    alt=\"restore item\"\n    class=\"btn btn-outline-light btn-sm action-button\">\n    <i class=\"fa-solid fa-rotate-left\"></i>\n   </button> \n   \n     <div class=\"row\">\n       <div class=\"col-md-12 task-date\">\n       ").concat(item.date, "\n       </div>\n     </div>\n     </div>");
-                // const li = document.createElement('li');
-                // li.textContent = item.task;
-                // li.setAttribute('id',item.id.toString());
-                // li.style.color = 'gray';
-                // li.style.textDecoration = 'line-through';
-                // Create the button element
-                // const deleteButton = document.createElement("button");
-                // deleteButton.textContent = "Delete";
-                // deleteButton.setAttribute('id',"del");
-                //   // Add the button to the list item
-                //   li.appendChild(deleteButton);
-                //create the untdo button element  
-                //  const undoButton = document.createElement("button");
-                //   undoButton.textContent = "Undo";
-                //   undoButton.setAttribute('id',"undo");
-                //   li.appendChild(undoButton);
-                //add to the main area
-                // completedArea?.appendChild(li);
                 _this.completeResult += (completeItem);
             });
             if (completedArea) {
@@ -127,21 +109,6 @@ var TodoList = /** @class */ (function () {
                     });
                 }
             });
-            /*const myList = document.getElementById("listdiv");
-            //const liElements = myList?.getElementsByTagName("li");
-            const divArray = myList?.querySelectorAll('div.task-item');
-          
-            if (divArray) {
-              for (let i = 0; i < divArray.length; i++) {
-                const item = divArray[i];
-                const id = item.getAttribute("id");
-          
-                item.addEventListener("click", () => {
-                  console.log(`Clicked on item ${id}`);
-                  this.handleClickOnItem(Number(id));
-                });
-              }
-            }*/
         };
         this.updateTaskList = function (id, newText) {
             var selecteTaskIndex = _this.findObjectById(Number(id));
@@ -190,23 +157,6 @@ var TodoList = /** @class */ (function () {
                     });
                 }
             });
-            return;
-            var myList = document.getElementById("listdiv");
-            var buttonArray = myList === null || myList === void 0 ? void 0 : myList.getElementsByTagName("button");
-            if (buttonArray) {
-                var _loop_1 = function (i) {
-                    var bt = buttonArray[i];
-                    var id = bt.getAttribute("id");
-                    bt.addEventListener("click", function () {
-                        console.log("Clicked on item ".concat(id));
-                        _this.showEditFiedl(id);
-                        //this.handleClickOnItem(Number(id));
-                    });
-                };
-                for (var i = 0; i < buttonArray.length; i++) {
-                    _loop_1(i);
-                }
-            }
         };
         // Handles the enter key event to add task to listSt.
         this.enterKeyHandler = function () {
@@ -280,8 +230,6 @@ var TodoList = /** @class */ (function () {
             var _yesterday = new Date();
             _yesterday.setDate(_yesterday.getDate() - 1);
             var yesterdayRefernce = _yesterday.toLocaleDateString('en-GB');
-            //const finalToday = new Date(todayRefrence)
-            //const finalYesterday = new Date(yesterdayRefernce).getTime();
             _this.todosArray.forEach(function (el) {
                 console.log(todayRefrence, yesterdayRefernce);
                 //let arrayDate = new Date(el.date);
@@ -338,11 +286,6 @@ var TodoList = /** @class */ (function () {
     //Handles the click event on a Todo item. Toggles the completion status and updates the corresponding arrays.
     TodoList.prototype.handleClickOnItem = function ($id) {
         console.log("clicked on item ".concat($id));
-        //return;
-        //toggle the checkbox
-        //let checkboxInstance = document.getElementById(`${$id}`) as HTMLInputElement;
-        //console.log(checkboxInstance);
-        //checkboxInstance.checked = !checkboxInstance.checked;
         var itemObject = this.todosArray.find(function (el) { return el.id === $id; });
         if (itemObject) {
             //filtet the check item from the todos arra
@@ -356,12 +299,6 @@ var TodoList = /** @class */ (function () {
         else {
             console.log('item not found');
         }
-        //  if(itemObject) {
-        //     itemObject.completed = !itemObject.completed;
-        //   }
-        //  if(itemObject?.completed ){
-        //  }
-        //this.addStyleChange();
     };
     // Perform the necessary actions for deleting the item from the completed list with the provided ID
     TodoList.prototype.handleButtonClick = function (liId) {
