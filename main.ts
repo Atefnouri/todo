@@ -26,6 +26,7 @@ class TodoList {
       this.disPlayHandlerTrigger();
       this.completedDisplayHandler();
       this.clearLocalStorage();
+      //this.playSound();
   
     }
 
@@ -35,7 +36,7 @@ class TodoList {
 
 
     clearLocalStorage  = () => {
-
+      return
       let clearButton = document.getElementById("clear") as HTMLElement;
 clearButton.addEventListener("click", () => {
   const confirmation = window.confirm("Are you sure you want to clear your local storage");
@@ -100,7 +101,7 @@ location.reload();
     this.todosArray = this.todosArray.filter((item) => item.id !== $id);
     console.table(this.todosArray);
     this.CompletedTodosArray.push(itemObject);
-
+     this.playSound(); 
     this.disPlayHandlerTrigger();
     this.completedDisplayHandler();
 
@@ -537,10 +538,17 @@ localStorage.setItem("CompletedTodosArray", elementsString);
       
     }
 
+    playSound = () => {
+      const audio = new Audio("./check.mp3"); // Replace with the actual path to your sound file
+      audio.play();
+  }
+  
 
 
 
   }
+
+  
 
 
 //main function

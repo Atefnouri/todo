@@ -4,6 +4,7 @@ var TodoList = /** @class */ (function () {
     function TodoList() {
         var _this = this;
         this.clearLocalStorage = function () {
+            return;
             var clearButton = document.getElementById("clear");
             clearButton.addEventListener("click", function () {
                 var confirmation = window.confirm("Are you sure you want to clear your local storage");
@@ -243,6 +244,10 @@ var TodoList = /** @class */ (function () {
                 }
             });
         };
+        this.playSound = function () {
+            var audio = new Audio("./check.mp3"); // Replace with the actual path to your sound file
+            audio.play();
+        };
         //initialasting
         this.emptyMsg = document.getElementById("emptymsg");
         this.button = document.querySelector('#addButton');
@@ -256,6 +261,7 @@ var TodoList = /** @class */ (function () {
         this.disPlayHandlerTrigger();
         this.completedDisplayHandler();
         this.clearLocalStorage();
+        //this.playSound();
     }
     TodoList.prototype.localStorageHandler = function () {
         // Retrieve the string from local storage
@@ -293,6 +299,7 @@ var TodoList = /** @class */ (function () {
             this.todosArray = this.todosArray.filter(function (item) { return item.id !== $id; });
             console.table(this.todosArray);
             this.CompletedTodosArray.push(itemObject);
+            this.playSound();
             this.disPlayHandlerTrigger();
             this.completedDisplayHandler();
         }
