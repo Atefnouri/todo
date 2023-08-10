@@ -36,7 +36,7 @@ class TodoList {
 
 
     clearLocalStorage  = () => {
-      return
+ 
       let clearButton = document.getElementById("clear") as HTMLElement;
 clearButton.addEventListener("click", () => {
   const confirmation = window.confirm("Are you sure you want to clear your local storage");

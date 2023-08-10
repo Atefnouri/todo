@@ -4,7 +4,6 @@ var TodoList = /** @class */ (function () {
     function TodoList() {
         var _this = this;
         this.clearLocalStorage = function () {
-            return;
             var clearButton = document.getElementById("clear");
             clearButton.addEventListener("click", function () {
                 var confirmation = window.confirm("Are you sure you want to clear your local storage");
