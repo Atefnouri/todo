@@ -2,6 +2,9 @@
 
 🚀 This is a simple Todo List application built using pure TypeScript without any libraries.
 
+
+![App Screenshot](./screenshot.png)
+
 ## Features
 
 - Add new tasks to the list
