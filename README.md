@@ -25,8 +25,7 @@
 Make sure you have the following software installed on your machine:
 
 - Node.js (v12 or higher)
-- TypeScript (v4 or higher)
-- Git
+- TypeScript (v5 or higher)
 
 ### Installation
 
@@ -53,7 +52,7 @@ Make sure you have the following software installed on your machine:
 1. Build the TypeScript code:
 
    ```bash
-   npm tsc main.ts --watch
+   npx tsc ./src/main.ts --watch 
    ```
 
 2. Open the `index.html` file in your preferred web browser.
