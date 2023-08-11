@@ -1,14 +1,16 @@
 # Todo List App
 
-This is a simple Todo List application built using pure TypeScript.
+🚀 This is a simple Todo List application built using pure TypeScript without any libraries.
 
 ## Features
 
 - Add new tasks to the list
+- Edit any existing task
 - Mark tasks as completed
 - undo completed task and restore to main list
 - Delete tasks from the list
-- add local storage support
+- Local storage support
+- search for any task
 
 ## Technologies Used
 
