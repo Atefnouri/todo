@@ -244,7 +244,7 @@ var TodoList = /** @class */ (function () {
             });
         };
         this.playSound = function () {
-            var audio = new Audio("./check.mp3"); // Replace with the actual path to your sound file
+            var audio = new Audio("./src/check.mp3"); // Replace with the actual path to your sound file
             audio.play();
         };
         //initialasting
@@ -260,7 +260,6 @@ var TodoList = /** @class */ (function () {
         this.disPlayHandlerTrigger();
         this.completedDisplayHandler();
         this.clearLocalStorage();
-        //this.playSound();
     }
     TodoList.prototype.localStorageHandler = function () {
         // Retrieve the string from local storage

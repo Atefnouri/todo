@@ -1,4 +1,4 @@
-import { Todo } from './src/ITodo';
+import { Todo } from './ITodo';
 class TodoList {
  
     public todosArray: Todo[];
@@ -26,7 +26,6 @@ class TodoList {
       this.disPlayHandlerTrigger();
       this.completedDisplayHandler();
       this.clearLocalStorage();
-      //this.playSound();
   
     }
 
@@ -539,7 +538,7 @@ localStorage.setItem("CompletedTodosArray", elementsString);
     }
 
     playSound = () => {
-      const audio = new Audio("./check.mp3"); // Replace with the actual path to your sound file
+      const audio = new Audio("./src/check.mp3"); // Replace with the actual path to your sound file
       audio.play();
   }
   
